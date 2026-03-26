@@ -4,7 +4,7 @@
     <title>长谷川蜜柑之窝</title>
     <link>https://zundadd.github.io/HasekawaMikan.github.io/</link>
     <description>Recent content on 长谷川蜜柑之窝</description>
-    <generator>Hugo -- 0.158.0</generator>
+    <generator>Hugo -- 0.159.0</generator>
     <language>zh-cn</language>
     <copyright>Hasekawa Mikan</copyright>
     <lastBuildDate>Wed, 18 Mar 2026 00:00:00 +0000</lastBuildDate>
@@ -113,6 +113,20 @@
       <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
       <guid>https://zundadd.github.io/HasekawaMikan.github.io/posts/%E6%9D%82%E8%B0%88/gametalking/</guid>
       <description>报菜名时间</description>
+    </item>
+    <item>
+      <title>作品</title>
+      <link>https://zundadd.github.io/HasekawaMikan.github.io/works/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://zundadd.github.io/HasekawaMikan.github.io/works/</guid>
+      <description>&lt;h1 id=&#34;作品合集&#34;&gt;作品合集&lt;/h1&gt;
+&lt;h3 id=&#34;gamejam&#34;&gt;Gamejam&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;CIGA2024 - &lt;a href=&#34;https://www.gmhub.com/game/5373&#34;&gt;西西弗斯不干了&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;腾讯高效游戏开发大赛2024武汉站 - &lt;a href=&#34;https://bingyan.itch.io/endtropy&#34;&gt;Endtropy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;GlobalGamejam2025 - &lt;a href=&#34;https://bingyan.itch.io/bubble-pop&#34;&gt;BubblePop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;聚光灯2025 - &lt;a href=&#34;https://bingyan.itch.io/followbell&#34;&gt;追铃&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
   </channel>
 </rss>
