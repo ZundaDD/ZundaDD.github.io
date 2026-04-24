@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="Hasekawa Mikan">
 <link rel="canonical" href="https://zundadd.github.io/HasekawaMikan.github.io/">
-<link crossorigin="anonymous" href="/HasekawaMikan.github.io/assets/css/stylesheet.a8d4a8a9be4bc278bdd08f8112581e9469327cefffc1be25bfa06369772ea12f.css" integrity="sha256-qNSoqb5Lwni90I&#43;BElgelGkyfO//wb4lv6BjaXcuoS8=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/HasekawaMikan.github.io/assets/css/stylesheet.d566b8ab38e3d82aaa5c8c801c7a2af8a78265d19b5b8a288b4ade547f71cf50.css" integrity="sha256-1Wa4qzjj2CqqXIyAHHoq&#43;KeCZdGbW4ooi0reVH9xz1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-32x32.png">
@@ -145,18 +145,19 @@
     </nav>
 </header>
 <main class="main"> 
-<article class="first-entry home-info">
-    <header class="entry-header">
-        <h1>要开始了哟😍</h1>
-    </header>
-    <div class="entry-content">
-        <p>你好，这里是长谷川蜜柑的小窝，也可以是俊达旦旦的小窝。</p>
+<article class="first-entry home-info home-info-container">
+    <div class="home-info-left">
+        <header class="entry-header">
+            <h1>要开始了哟😍</h1>
+        </header>
+        <div class="entry-content">
+            <p>你好，这里是长谷川蜜柑的小窝，也可以是俊达旦旦的小窝。</p>
 <p>网页会不定期施工，加入一些神秘小功能。</p>
 <p>封面致谢，侵删：<a href="http://pixiv.net/users/6058416">SolityL</a> <a href="https://www.pixiv.net/users/27543708">嘤吟</a>  <a href="https://www.pixiv.net/users/4381132">1d32156</a>  <a href="https://www.pixiv.net/users/31347263">橡沐朩对</a>  <a href="https://www.pixiv.net/users/24472068">Kaptn.T0shka☠</a> <a href="https://www.pixiv.net/users/23961929">keiyuu</a> <a href="https://www.pixiv.net/users/115713296">Fridrindat</a> <a href="https://www.pixiv.net/users/17403113">Istia</a></p>
 
-    </div>
-    <footer class="entry-footer">
-        <div class="social-icons" >
+        </div>
+        <footer class="entry-footer">
+            <div class="social-icons" >
     <a href="https://github.com/ZundaDD" target="_blank" rel="noopener noreferrer me"
         title="看 Github">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -168,7 +169,77 @@
     </a>
 </div>
 
-    </footer>
+        </footer>
+    </div>
+    <div class="home-info-right song-widget">
+        <div class="song-card">
+            <div class="song-cover-container">
+                <img id="song-cover" src="" alt="Song Cover" />
+            </div>
+            <div class="song-info">
+                <h3 id="song-title"></h3>
+                <p id="song-composer"></p>
+                <button id="song-refresh-btn" class="song-refresh-btn" aria-label="再来一个">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="refresh-icon"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                    <span class="refresh-text">再来一个</span>
+                </button>
+            </div>
+            <div class="song-ad-text">软广</div>
+        </div>
+    </div>
+
+    <script>
+        const songsList = [{"composer":"Aoi","cover":"https://static.wikia.nocookie.net/chunithm/images/b/bb/202312214_blanoir.png/revision/latest?cb=20231220130257\u0026path-prefix=zh","title":"βlαnoir"},{"composer":"DJ Sharpen","cover":"http://p1.music.126.net/VnKdCj3Evfy8qiZCL2TpKw==/109951168429614296.jpg?param=140y140","title":"Over the Fullereneshift"},{"composer":"void","cover":"https://f4.bcbits.com/img/a2280210872_1x1_700.avif","title":"Dedication"},{"composer":"zts","cover":"https://wiki.arcaea.cn/images/thumb/2/25/Songs_lastendconductor.jpg/384px-Songs_lastendconductor.jpg","title":"lastendconductor"},{"composer":"かたぎり","cover":"https://ts3.tc.mm.bing.net/th/id/OIP-C.otxvzD6Q02v8JD59mycmKgHaHa?w=108\u0026h=108\u0026c=1\u0026bgcl=970193\u0026r=0\u0026o=7\u0026dpr=1.5\u0026pid=ImgRC\u0026rm=3","title":"Sendan Life (Katagiri Bootleg)"}];
+        
+        function getRandomSong(excludeTitle) {
+            if (!songsList || songsList.length === 0) return null;
+            if (songsList.length === 1) return songsList[0];
+            
+            let candidate = songsList[Math.floor(Math.random() * songsList.length)];
+            while (excludeTitle && candidate.title === excludeTitle) {
+                candidate = songsList[Math.floor(Math.random() * songsList.length)];
+            }
+            return candidate;
+        }
+
+        function updateSongWidget(song) {
+            if (!song) return;
+            const coverEl = document.getElementById('song-cover');
+            const titleEl = document.getElementById('song-title');
+            const composerEl = document.getElementById('song-composer');
+            const card = document.querySelector('.song-card');
+            
+            card.classList.add('loading');
+            
+            setTimeout(() => {
+                coverEl.src = song.cover;
+                titleEl.textContent = song.title;
+                composerEl.textContent = song.composer;
+                card.classList.remove('loading');
+            }, 150);
+        }
+
+        function initSongWidget() {
+            const initialSong = getRandomSong();
+            if (initialSong) {
+                
+                document.getElementById('song-cover').src = initialSong.cover;
+                document.getElementById('song-title').textContent = initialSong.title;
+                document.getElementById('song-composer').textContent = initialSong.composer;
+            }
+
+            const refreshBtn = document.getElementById('song-refresh-btn');
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    const currentTitle = document.getElementById('song-title').textContent;
+                    const newSong = getRandomSong(currentTitle);
+                    updateSongWidget(newSong);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initSongWidget);
+    </script>
 </article>
 <div class="post-entries-grid">
 
