@@ -10,7 +10,7 @@
 <meta name="description" content="我爱写日记吗">
 <meta name="author" content="Hasekawa Mikan">
 <link rel="canonical" href="https://zundadd.github.io/HasekawaMikan.github.io/diary/">
-<link crossorigin="anonymous" href="/HasekawaMikan.github.io/assets/css/stylesheet.d566b8ab38e3d82aaa5c8c801c7a2af8a78265d19b5b8a288b4ade547f71cf50.css" integrity="sha256-1Wa4qzjj2CqqXIyAHHoq&#43;KeCZdGbW4ooi0reVH9xz1A=" rel="preload stylesheet" as="style">
+<link crossorigin="anonymous" href="/HasekawaMikan.github.io/assets/css/stylesheet.57cde079ba5c696d0ead5df09c9f80ff395ebebdd4284d4b837cc2796cb1fb1e.css" integrity="sha256-V83gebpcaW0OrV3wnJ&#43;A/zlevr3UKE1Lg3zCeWyx&#43;x4=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-32x32.png">
@@ -156,6 +156,17 @@
   <article class="diary-entry">
     <header class="diary-entry-header">
       <div class="diary-entry-date">
+        <time class="diary-entry-ts" datetime="2026-04-21 23:20:01">2026-04-21 23:20:01</time>
+      </div>
+    </header>
+    <div class="diary-entry-content post-content"><p>火锅吃到爽了，周末还有烤全羊，大三过的也太舒服了。最近想写的东西太多了，有时间就要多学习。</p>
+
+
+    </div>
+  </article>
+  <article class="diary-entry">
+    <header class="diary-entry-header">
+      <div class="diary-entry-date">
         <time class="diary-entry-ts" datetime="2026-04-21 19:48:53">2026-04-21 19:48:53</time>
       </div>
     </header>
@@ -177,13 +188,75 @@
     </div>
   </article>
 </div>
-<footer class="page-footer">
+<div class="infinite-scroll-loader" id="infinite-scroll-loader" data-next-url="">
+  <div class="spinner"></div>
+</div>
+
+<footer class="page-footer diary-pagination" style="display: none;">
   <nav class="pagination">
     <a class="prev" href="https://zundadd.github.io/HasekawaMikan.github.io/diary/">
       «&nbsp;&nbsp;1/2
     </a>
   </nav>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const loader = document.getElementById("infinite-scroll-loader");
+  const timeline = document.querySelector(".diary-timeline");
+  if (!loader || !timeline) return;
+
+  let isLoading = false;
+  let nextUrl = loader.getAttribute("data-next-url");
+
+  if (!nextUrl) {
+    loader.style.display = "none";
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !isLoading && nextUrl) {
+      loadNextPage();
+    }
+  }, { rootMargin: "400px" });
+
+  observer.observe(loader);
+
+  async function loadNextPage() {
+    isLoading = true;
+    loader.style.opacity = "1";
+    
+    try {
+      const response = await fetch(nextUrl);
+      if (!response.ok) throw new Error("Network error");
+      
+      const htmlText = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, "text/html");
+      
+      const newEntries = doc.querySelectorAll(".diary-timeline .diary-entry");
+      newEntries.forEach(entry => timeline.appendChild(entry));
+      
+      const newLoader = doc.getElementById("infinite-scroll-loader");
+      if (newLoader && newLoader.getAttribute("data-next-url")) {
+        nextUrl = newLoader.getAttribute("data-next-url");
+        loader.setAttribute("data-next-url", nextUrl);
+      } else {
+        nextUrl = null;
+        loader.style.display = "none";
+        observer.unobserve(loader);
+      }
+    } catch (e) {
+      console.error("Failed to load next page:", e);
+    } finally {
+      isLoading = false;
+      if (nextUrl) {
+        loader.style.opacity = "0";
+      }
+    }
+  }
+});
+</script>
     </main>
     
 <footer class="footer">
