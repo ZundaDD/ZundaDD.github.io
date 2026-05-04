@@ -9,16 +9,16 @@
 <meta name="keywords" content="C#">
 <meta name="description" content="C#8.0 - C#12.0 特性/语法糖搬运">
 <meta name="author" content="Hasekawa Mikan">
-<link rel="canonical" href="https://zundadd.github.io/HasekawaMikan.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/">
-<link crossorigin="anonymous" href="/HasekawaMikan.github.io/assets/css/stylesheet.57cde079ba5c696d0ead5df09c9f80ff395ebebdd4284d4b837cc2796cb1fb1e.css" integrity="sha256-V83gebpcaW0OrV3wnJ&#43;A/zlevr3UKE1Lg3zCeWyx&#43;x4=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://zundadd.github.io/HasekawaMikan.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://zundadd.github.io/HasekawaMikan.github.io/safari-pinned-tab.svg">
+<link rel="canonical" href="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.57cde079ba5c696d0ead5df09c9f80ff395ebebdd4284d4b837cc2796cb1fb1e.css" integrity="sha256-V83gebpcaW0OrV3wnJ&#43;A/zlevr3UKE1Lg3zCeWyx&#43;x4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://zundadd.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://zundadd.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://zundadd.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh-cn" href="https://zundadd.github.io/HasekawaMikan.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/">
+<link rel="alternate" hreflang="zh-cn" href="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/">
 <noscript>
     <style>
         #theme-toggle,
@@ -55,7 +55,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="https://zundadd.github.io/HasekawaMikan.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/">
+</noscript><meta property="og:url" content="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/">
   <meta property="og:site_name" content="长谷川蜜柑之窝">
   <meta property="og:title" content="C# 更新记录 II">
   <meta property="og:description" content="C#8.0 - C#12.0 特性/语法糖搬运">
@@ -64,9 +64,9 @@
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2025-11-17T00:00:00+00:00">
     <meta property="article:modified_time" content="2025-11-17T00:00:00+00:00">
-    <meta property="og:image" content="https://zundadd.github.io/HasekawaMikan.github.io/covers/cover012.jpg">
+    <meta property="og:image" content="https://zundadd.github.io/covers/cover012.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://zundadd.github.io/HasekawaMikan.github.io/covers/cover012.jpg">
+<meta name="twitter:image" content="https://zundadd.github.io/covers/cover012.jpg">
 <meta name="twitter:title" content="C# 更新记录 II">
 <meta name="twitter:description" content="C#8.0 - C#12.0 特性/语法糖搬运">
 
@@ -80,13 +80,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "文章列表",
-      "item": "https://zundadd.github.io/HasekawaMikan.github.io/posts/"
+      "item": "https://zundadd.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "C# 更新记录 II",
-      "item": "https://zundadd.github.io/HasekawaMikan.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/"
+      "item": "https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/"
     }
   ]
 }
@@ -104,7 +104,7 @@
   "articleBody": "C# 更新记录 在此记录C#版本更新时带来的新特性，并给出C#版本和使用场景的对应关系。\nC# 8.0 可空引用类型 除了int?、float?这样的可空值类型，引入了string?这样的可空引用类型。但是由于引用变量本身就可以为null，因此可空引用类型并不是一个新的类型，只是用于辅助编译器检查潜在的null错误。\n不可为 null 的引用类型在取消引用时应该始终是安全的，因为它们的 null-state 是 not-null。 若强制执行该规则，如果不可为 null 的引用类型没有初始化（以任何形式）为非 null 值，编译器将发出警告。\n对比而言，可为null的引用类型必须在取消对变量的引用之前确定该变量的状态为 not-null（使用!= null或者is not null）。 如果可为 null 的引用的状态确定为 maybe-null，将其分配给不可为 Null 的引用变量会生成编译器警告。\n对于将非not-null状态的值赋值给not-null状态的引用变量时：\n如果要赋值为null，需要使用null!来向编译器强调。 如果要赋值为可为null的引用类型，需要在变量名后面加上!来强调。 同时需要自行维护因为暂时地违反规则而导致的空引用问题。\n成员访问 Null运算符?.和?[] 仅当操作数的计算结果为非 NULL 时，NULL 条件运算符才对其操作数应用成员访问 (?.) 或元素访问 (?[]) 操作；否则，它会返回 null。 换句话说：\n如果 a 的计算结果为 null，则 a?.x 或 a?[x] 的结果为 null。 如果 a 的计算结果为非 null，则 a?.x 或 a?[x] 的结果将分别与 a.x 或 a[x] 的结果相同。 ^和..选择符 ^和..选择符只能用于单维数组。\n^选择符指示序列末尾的元素位置，比如^1指向最后一个元素。\n..选择符指定索引范围的开始和结束作为其操作数， 左侧操作数是范围的包含性开头。 右侧操作数是范围的包含性末尾。通过省略 .. 运算符的任何操作数，可以获得一个开放区间：\na.. 与 a..^0 等效 ..b 与 0..b 等效 .. 与 0..^0 等效 C# 9.0 记录record record是引用修饰符，用于提供封装数据的内置功能。record class 语法等价于record，record struct 则用于定义一种具有类似功能的值类型。比如：\n// 位置参数语法形式 public record Person(string FirstName, string LastName); // 等价于 public record Person { public string FirstName { get; init; } public string LastName { get; init; } }; public record struct Point { public double X { get; init; } public double Y { get; init; } public double Z { get; init; } } 同时不强制属性为只读，任何不符合需求的自动生成样式都可以通过声明相同的字段、属性来更改，比如：\npublic record Person(string FirstName, string LastName, string Id) { internal string Id { get; init; } = Id; } record关键字主要提供了以下内容：\n值相等性比较，相比引用值比较，record默认使用值相等比较，同时额外比较类型，如果类型不相同就不等。\n内置的输出格式，将以 {xx : xx, xx : xx}的格式默认重载ToString函数\n非破坏性变化声明（with），例如：\npublic record Person(string FirstName, string LastName) { public string[] PhoneNumbers { get; init; } } Person person1 = new(\"Nancy\", \"Davolio\") { PhoneNumbers = new string[1] }; Console.WriteLine(person1); Person person2 = person1 with { FirstName = \"John\" }; 引用型的浅不可变性，即在多线程环境下不会发生值的改变，但是引用属性的指向可以发生改变。\nrecord class之间可以继承，比如：\npublic abstract record Person(string FirstName, string LastName); public record Teacher(string FirstName, string LastName, int Grade) : Person(FirstName, LastName); 但是在使用with表达式时，你只能编辑声明的变量的类型的字段，而不是with的对象的实际类型\ninit关键字 init 关键字在属性或索引器中定义访问器方法。 init-only 资源库仅在对象构造期间为属性或索引器元素赋值。 init 强制实施不可变性，因此，一旦初始化对象，将无法更改，必须通过调用构造函数来初始化。\ninit访问器不强制提供值，如果没有显示给出值，将初始化为该类型的默认值。与private set和readonly的区别是，init不要求一定在构造函数中，也可以使用对象初始值设定项（new () {xx = xx, xx = xx}）\nC# 11.0 原始字符串 原始字符串字面量以至少三个双引号 (\"\"\") 字符开头。 它以相同数量的双引号字符结尾，无需转义序列。 比如：\nstring longMessage = \"\"\" This is a long message. It has several lines. Some are indented more than others. Some should start at the first column. Some have \"quoted text\" in them. \"\"\"; var location = $$\"\"\" You are at {{{Longitude}}, {{Latitude}}} \"\"\"; 如果要使用内插，使用多少个$就需要多少个大括号{}表示内插。\n泛型Attirbute Attribute可以使用泛型定义，但是在使用的时候比如给出所有的类型参数，而不能使用另一个泛型参数，比如：\npublic class GenericAttribute\u003cT\u003e : Attribute { } public class GenericType\u003cT\u003e { [GenericAttribute()] // 不合法，T不是具体类型 public string Method() =\u003e default; } required修饰符 required修饰符强制字段或属性使用对象初始值设定项进行初始化，该字段的可见性应该至少与其包含类型一样可见，且不可被隐藏。对于record中，必须显示指定required属性/字段的定义，而不是使用位置参数声明。\nC# 12.0 主构造函数 在定义类的时候，可以直接给出一个构造函数的参数列表，这些参数可以当作局部变量用于整个类，比如：\npublic class Employee(int id, string name) { public int Id { get; } = id; public string Name { get; } = name; public void Display() { Console.WriteLine($\"Employee ID: {id}, Name: {name}\"); } } 集合表达式 集合表达式中的 分布元素，..e 添加该表达式中的所有元素。 参数必须是集合类型。比如：\nint[] row0 = [1, 2, 3]; int[] row1 = [4, 5, 6]; int[] row2 = [7, 8, 9]; int[] single = [.. row0, .. row1, .. row2]; ..元素计算枚举表达式的每个元素。 每个元素都包含在输出集合中。\n",
   "wordCount" : "2003",
   "inLanguage": "zh-cn",
-  "image":"https://zundadd.github.io/HasekawaMikan.github.io/covers/cover012.jpg","datePublished": "2025-11-17T00:00:00Z",
+  "image":"https://zundadd.github.io/covers/cover012.jpg","datePublished": "2025-11-17T00:00:00Z",
   "dateModified": "2025-11-17T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -112,14 +112,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://zundadd.github.io/HasekawaMikan.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/"
+    "@id": "https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/c%23-update2/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "长谷川蜜柑之窝",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://zundadd.github.io/HasekawaMikan.github.io/favicon.ico"
+      "url": "https://zundadd.github.io/favicon.ico"
     }
   }
 }
@@ -141,7 +141,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://zundadd.github.io/HasekawaMikan.github.io/" accesskey="h" title="长谷川蜜柑之窝 (Alt + H)">长谷川蜜柑之窝</a>
+            <a href="https://zundadd.github.io/" accesskey="h" title="长谷川蜜柑之窝 (Alt + H)">长谷川蜜柑之窝</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -167,22 +167,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/archives/" title="时间轴">
+                <a href="https://zundadd.github.io/archives/" title="时间轴">
                     <span>时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/diary/" title="日记">
+                <a href="https://zundadd.github.io/diary/" title="日记">
                     <span>日记</span>
                 </a>
             </li>
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/posts/" title="分区">
+                <a href="https://zundadd.github.io/posts/" title="分区">
                     <span>分区</span>
                 </a>
             </li>
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/works/" title="作品">
+                <a href="https://zundadd.github.io/works/" title="作品">
                     <span>作品</span>
                 </a>
             </li>
@@ -193,7 +193,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://zundadd.github.io/HasekawaMikan.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://zundadd.github.io/HasekawaMikan.github.io/posts/">文章列表</a></div>
+    <div class="breadcrumbs"><a href="https://zundadd.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://zundadd.github.io/posts/">文章列表</a></div>
     <h1 class="post-title entry-hint-parent">
       C# 更新记录 II
     </h1>
@@ -202,7 +202,7 @@
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" src="https://zundadd.github.io/HasekawaMikan.github.io/covers/cover012.jpg" alt="">
+        <img loading="eager" src="https://zundadd.github.io/covers/cover012.jpg" alt="">
         
 </figure>
   <div class="post-content"><h1 id="c-更新记录">C# 更新记录<a hidden class="anchor" aria-hidden="true" href="#c-更新记录">#</a></h1>

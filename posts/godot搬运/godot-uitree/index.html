@@ -9,16 +9,16 @@
 <meta name="keywords" content="Godot, Editor">
 <meta name="description" content="Godot基础编辑器拓展">
 <meta name="author" content="Hasekawa Mikan">
-<link rel="canonical" href="https://zundadd.github.io/HasekawaMikan.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/">
-<link crossorigin="anonymous" href="/HasekawaMikan.github.io/assets/css/stylesheet.57cde079ba5c696d0ead5df09c9f80ff395ebebdd4284d4b837cc2796cb1fb1e.css" integrity="sha256-V83gebpcaW0OrV3wnJ&#43;A/zlevr3UKE1Lg3zCeWyx&#43;x4=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/HasekawaMikan.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://zundadd.github.io/HasekawaMikan.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://zundadd.github.io/HasekawaMikan.github.io/safari-pinned-tab.svg">
+<link rel="canonical" href="https://zundadd.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.57cde079ba5c696d0ead5df09c9f80ff395ebebdd4284d4b837cc2796cb1fb1e.css" integrity="sha256-V83gebpcaW0OrV3wnJ&#43;A/zlevr3UKE1Lg3zCeWyx&#43;x4=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://zundadd.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://zundadd.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://zundadd.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh-cn" href="https://zundadd.github.io/HasekawaMikan.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/">
+<link rel="alternate" hreflang="zh-cn" href="https://zundadd.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/">
 <noscript>
     <style>
         #theme-toggle,
@@ -55,7 +55,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="https://zundadd.github.io/HasekawaMikan.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/">
+</noscript><meta property="og:url" content="https://zundadd.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/">
   <meta property="og:site_name" content="长谷川蜜柑之窝">
   <meta property="og:title" content="Godot自定义菜单">
   <meta property="og:description" content="Godot基础编辑器拓展">
@@ -64,9 +64,9 @@
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2025-08-21T00:00:00+00:00">
     <meta property="article:modified_time" content="2025-08-21T00:00:00+00:00">
-    <meta property="og:image" content="https://zundadd.github.io/HasekawaMikan.github.io/covers/cover005.jpg">
+    <meta property="og:image" content="https://zundadd.github.io/covers/cover005.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://zundadd.github.io/HasekawaMikan.github.io/covers/cover005.jpg">
+<meta name="twitter:image" content="https://zundadd.github.io/covers/cover005.jpg">
 <meta name="twitter:title" content="Godot自定义菜单">
 <meta name="twitter:description" content="Godot基础编辑器拓展">
 
@@ -80,13 +80,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "文章列表",
-      "item": "https://zundadd.github.io/HasekawaMikan.github.io/posts/"
+      "item": "https://zundadd.github.io/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "Godot自定义菜单",
-      "item": "https://zundadd.github.io/HasekawaMikan.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/"
+      "item": "https://zundadd.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/"
     }
   ]
 }
@@ -104,7 +104,7 @@
   "articleBody": "Godot自定义菜单构建 在Godot中，编辑器扩展和在Unity中相比底层的支持更少，从引擎的量级对比上就可以看出。默认的可添加UI控件的位置并不包含左上角和场景、项目等并列的位置，这就导致使用起来不方便的问题。\n另一个问题是，当使用外部编辑器之后，对于EditorScript的运行便无法通过常规的Script-\u003e文件-\u003e执行调用，这样导致如果要频繁地调用简单的编辑器专用脚本，切换时非常麻烦。因此需要采用EditorPlugin的方式来创建，但这样就回到了第一个问题。\n考虑到Godot使用的是构建游戏的所有对象来构建自己的引擎，二者是同源的，Godot的UI也是在启动的时候构建成了一个树状结构，那么我们可以筛查这个UI结构，找到要插入控件的父对象，然后把我们要添加的自定义菜单PopupMenu对象作为孩子插入即可。\n定位语法树 既然语法树是一个树状结构，我们可以通过递归调用的方式获取并输出每一个节点。获取根节点的接口是EditorInterface.Singleton.GetBaseControl()，通过依次递归调用，得到了从根节点到目标位置的语法树（Godot版本4.4.1 NET.，不保证稳定）：\n@Panel@14 (Panel) @VBoxContainer@15 (VBoxContainer) @EditorTitleBar@16 (HBoxContainer) @MenuBar@103 (MenuBar) 场景 (PopupMenu) @PopupMenu@4924 (PopupMenu) @PopupMenu@4930 (PopupMenu) 项目 (PopupMenu) @PopupMenu@4941 (PopupMenu) CSharpTools (PopupMenu) @PopupMenu@14113 (PopupMenu) 调试 (PopupMenu) 编辑器 (PopupMenu) @PopupMenu@4954 (PopupMenu) @PopupMenu@4960 (PopupMenu) 帮助 (PopupMenu) 根据Godot的API：\n使用@EditorTitleBar@*这样的方式可以找到最终的位置，此时调用AddChild方法添加一个PopedMenu对象即可。\n添加可执行项 现在离成功执行脚本只差一步，只有向PopupMenu中添加元素才能有效果。这一点很简单，调用AddItem接口，传递选项显示内容和唯一ID即可做到。\n关于处理菜单选择，PopupMenu通过IdPressed信号来接收操作，该信号传递一个类型为long的id，表示对应的选项被按下，这个时候需要自己处理该怎么操作，比如维护一个回调Dictionary。信号处理函数如下：\nprivate Dictionary\u003clong, Action\u003e _menuCallbacks = new(); private void OnMenuItemPressed(long id) { if (_menuCallbacks.TryGetValue(id, out Action action)) action?.Invoke(); } 热重载 使用C#比较麻烦的一点是，任何改动如果要生效都需要重新Build，这就涉及到一个热重载的问题。我做了一个简易的实验，在构造函数和 _ExitTree中提供字段的输出，在 _EnterTree中进行字段的设置，得到了以下的结果：\n其中True和False输出的是是否为空。\n根据实验可以得到以下结论：\n当EditorPlugin在启用的情况下Build，那么这个对象将会被销毁并重新构建，同时会复制之前所有的字段值，如果是引用对象也会复制原来的引用。 Build的过程中不会触发 _EnterTree函数和 _ExitTree函数，但是会调用构造函数。 Build的过程中不应该预设UI字段仍然有效，所以在_ExitTree函数中应该重新FindChild。 妥协 因此，鉴于引用是直接复制的，那么要求就是向管理目录的对象中添加的回调一定是static的，即不包含实际调用的信息，不包含对象的成员。以下面的代码为例，ScanDeployAsset是一个static函数，具体内容省略。\npublic partial class DeployScanner : EditorPlugin { private static readonly string itemName = \"扫描可部署资产\"; public override void _EnterTree() { GetTree().ProcessFrame += Register; } public override void _ExitTree() { ProjectTopMenu.Instance?.RemoveItem(itemName); } public void Register() { GetTree().ProcessFrame -= Register; ProjectTopMenu.Instance?.AddItem(itemName, ScanDeployAsset); } } ",
   "wordCount" : "1325",
   "inLanguage": "zh-cn",
-  "image":"https://zundadd.github.io/HasekawaMikan.github.io/covers/cover005.jpg","datePublished": "2025-08-21T00:00:00Z",
+  "image":"https://zundadd.github.io/covers/cover005.jpg","datePublished": "2025-08-21T00:00:00Z",
   "dateModified": "2025-08-21T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -112,14 +112,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://zundadd.github.io/HasekawaMikan.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/"
+    "@id": "https://zundadd.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "长谷川蜜柑之窝",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://zundadd.github.io/HasekawaMikan.github.io/favicon.ico"
+      "url": "https://zundadd.github.io/favicon.ico"
     }
   }
 }
@@ -141,7 +141,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://zundadd.github.io/HasekawaMikan.github.io/" accesskey="h" title="长谷川蜜柑之窝 (Alt + H)">长谷川蜜柑之窝</a>
+            <a href="https://zundadd.github.io/" accesskey="h" title="长谷川蜜柑之窝 (Alt + H)">长谷川蜜柑之窝</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -167,22 +167,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/archives/" title="时间轴">
+                <a href="https://zundadd.github.io/archives/" title="时间轴">
                     <span>时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/diary/" title="日记">
+                <a href="https://zundadd.github.io/diary/" title="日记">
                     <span>日记</span>
                 </a>
             </li>
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/posts/" title="分区">
+                <a href="https://zundadd.github.io/posts/" title="分区">
                     <span>分区</span>
                 </a>
             </li>
             <li>
-                <a href="https://zundadd.github.io/HasekawaMikan.github.io/works/" title="作品">
+                <a href="https://zundadd.github.io/works/" title="作品">
                     <span>作品</span>
                 </a>
             </li>
@@ -193,7 +193,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://zundadd.github.io/HasekawaMikan.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://zundadd.github.io/HasekawaMikan.github.io/posts/">文章列表</a></div>
+    <div class="breadcrumbs"><a href="https://zundadd.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://zundadd.github.io/posts/">文章列表</a></div>
     <h1 class="post-title entry-hint-parent">
       Godot自定义菜单
     </h1>
@@ -202,7 +202,7 @@
 </div>
   </header> 
 <figure class="entry-cover">
-        <img loading="eager" src="https://zundadd.github.io/HasekawaMikan.github.io/covers/cover005.jpg" alt="">
+        <img loading="eager" src="https://zundadd.github.io/covers/cover005.jpg" alt="">
         
 </figure>
   <div class="post-content"><h1 id="godot自定义菜单构建">Godot自定义菜单构建<a hidden class="anchor" aria-hidden="true" href="#godot自定义菜单构建">#</a></h1>
@@ -254,7 +254,7 @@
 </li>
 </ul>
 <p>根据Godot的API：</p>
-<p><img loading="lazy" src="/HasekawaMikan.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/01.png"></p>
+<p><img loading="lazy" src="/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/01.png"></p>
 <p>使用@EditorTitleBar@*这样的方式可以找到最终的位置，此时调用AddChild方法添加一个PopedMenu对象即可。</p>
 <h2 id="添加可执行项">添加可执行项<a hidden class="anchor" aria-hidden="true" href="#添加可执行项">#</a></h2>
 <p>现在离成功执行脚本只差一步，只有向PopupMenu中添加元素才能有效果。这一点很简单，调用AddItem接口，传递选项显示内容和唯一ID即可做到。</p>
@@ -267,7 +267,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h2 id="热重载">热重载<a hidden class="anchor" aria-hidden="true" href="#热重载">#</a></h2>
 <p>使用C#比较麻烦的一点是，任何改动如果要生效都需要重新Build，这就涉及到一个热重载的问题。我做了一个简易的实验，在构造函数和 _ExitTree中提供字段的输出，在 _EnterTree中进行字段的设置，得到了以下的结果：</p>
-<p><img loading="lazy" src="/HasekawaMikan.github.io/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/02.png"></p>
+<p><img loading="lazy" src="/posts/godot%E6%90%AC%E8%BF%90/godot-uitree/02.png"></p>
 <p>其中True和False输出的是是否为空。</p>
 <p>根据实验可以得到以下结论：</p>
 <ul>
