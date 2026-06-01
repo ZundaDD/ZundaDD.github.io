@@ -354,34 +354,34 @@
 <h3 id="作业调度算法性能衡量">作业调度算法性能衡量<a hidden class="anchor" aria-hidden="true" href="#作业调度算法性能衡量">#</a></h3>
 <img src="./屏幕截图 2026-01-09 235638.png" alt="屏幕截图 2026-01-09 235638" style="zoom:75%;" />
 <table>
-  <thead>
-      <tr>
-          <th style="text-align: left">调度算法</th>
-          <th style="text-align: left">调度准则</th>
-          <th style="text-align: left">优点</th>
-          <th style="text-align: left">缺点</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>先来先服务</strong></td>
-          <td style="text-align: left">按作业到达先后顺序</td>
-          <td style="text-align: left">算法简单，对长作业有利，实现公平。</td>
-          <td style="text-align: left">对短作业不利；平均等待时间较长。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>短作业优先</strong></td>
-          <td style="text-align: left">预估服务时间最短的优先</td>
-          <td style="text-align: left">平均周转时间最短，系统吞吐量大。</td>
-          <td style="text-align: left">对长作业不利；需预知服务时间，难以准确估算。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>高响应比优先</strong></td>
-          <td style="text-align: left">响应比 R<sub>p</sub>  最高的优先</td>
-          <td style="text-align: left">综合考虑了等待和服务时间，平衡了长短作业。</td>
-          <td style="text-align: left">每次调度前需重新计算所有作业响应比，增加开销。</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th style="text-align: left">调度算法</th>
+					<th style="text-align: left">调度准则</th>
+					<th style="text-align: left">优点</th>
+					<th style="text-align: left">缺点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>先来先服务</strong></td>
+					<td style="text-align: left">按作业到达先后顺序</td>
+					<td style="text-align: left">算法简单，对长作业有利，实现公平。</td>
+					<td style="text-align: left">对短作业不利；平均等待时间较长。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>短作业优先</strong></td>
+					<td style="text-align: left">预估服务时间最短的优先</td>
+					<td style="text-align: left">平均周转时间最短，系统吞吐量大。</td>
+					<td style="text-align: left">对长作业不利；需预知服务时间，难以准确估算。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>高响应比优先</strong></td>
+					<td style="text-align: left">响应比 R<sub>p</sub>  最高的优先</td>
+					<td style="text-align: left">综合考虑了等待和服务时间，平衡了长短作业。</td>
+					<td style="text-align: left">每次调度前需重新计算所有作业响应比，增加开销。</td>
+			</tr>
+	</tbody>
 </table>
 <h3 id="进程调度">进程调度<a hidden class="anchor" aria-hidden="true" href="#进程调度">#</a></h3>
 <h4 id="优先数调度算法">优先数调度算法<a hidden class="anchor" aria-hidden="true" href="#优先数调度算法">#</a></h4>
@@ -396,67 +396,67 @@
 <h3 id="分区存储">分区存储<a hidden class="anchor" aria-hidden="true" href="#分区存储">#</a></h3>
 <p>分区大小不相等，根据分区进行动态地址映射，一般通过基址寄存器进行。系统会维护一个空闲区队列，表示主存中所有空闲的区，包含分区大小。</p>
 <table>
-  <thead>
-      <tr>
-          <th style="text-align: left">名称</th>
-          <th style="text-align: left">队列排序</th>
-          <th style="text-align: left">优点</th>
-          <th style="text-align: left">缺点</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>首次适应</strong></td>
-          <td style="text-align: left"><strong>按地址</strong>低地址 到高地址</td>
-          <td style="text-align: left">高地址保留了大块空间。</td>
-          <td style="text-align: left">导致低地址处留下一堆碎片。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>最佳适应</strong></td>
-          <td style="text-align: left"><strong>按容量</strong>从小到大</td>
-          <td style="text-align: left">尽量不浪费大空间。</td>
-          <td style="text-align: left">剩下的空间往往太小，无法使用。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>最坏适应</strong></td>
-          <td style="text-align: left"><strong>按容量</strong>从大到小</td>
-          <td style="text-align: left">剩下的空间依然很大，足以容纳其他作业，不容易产生碎片。</td>
-          <td style="text-align: left">后期无法申请大型空间。</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th style="text-align: left">名称</th>
+					<th style="text-align: left">队列排序</th>
+					<th style="text-align: left">优点</th>
+					<th style="text-align: left">缺点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>首次适应</strong></td>
+					<td style="text-align: left"><strong>按地址</strong>低地址 到高地址</td>
+					<td style="text-align: left">高地址保留了大块空间。</td>
+					<td style="text-align: left">导致低地址处留下一堆碎片。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>最佳适应</strong></td>
+					<td style="text-align: left"><strong>按容量</strong>从小到大</td>
+					<td style="text-align: left">尽量不浪费大空间。</td>
+					<td style="text-align: left">剩下的空间往往太小，无法使用。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>最坏适应</strong></td>
+					<td style="text-align: left"><strong>按容量</strong>从大到小</td>
+					<td style="text-align: left">剩下的空间依然很大，足以容纳其他作业，不容易产生碎片。</td>
+					<td style="text-align: left">后期无法申请大型空间。</td>
+			</tr>
+	</tbody>
 </table>
 <h3 id="页式存储">页式存储<a hidden class="anchor" aria-hidden="true" href="#页式存储">#</a></h3>
 <p>每个页的大小相等，动态申请动态映射。通过页表进行地址转换，页表项包含虚拟页号和物理页（块）号还有中断位（是否调入主存）。有一个寄存器存储了页表的地址，通过此基址加上虚拟地址中的虚拟页号查找到了物理页号，然后再转化为物理地址。</p>
 <p>为了减少查找的耗时，在缓存中使用相联存储器将页表的部分装入，称之为快表，每次先从快表中查找，如果找不到再去页表中找，并将对应的页表项送入快表。</p>
 <table>
-  <thead>
-      <tr>
-          <th style="text-align: left">算法名称</th>
-          <th style="text-align: left">淘汰核心准则</th>
-          <th style="text-align: left">硬件支持/数据结构</th>
-          <th style="text-align: left">淘汰执行过程</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>FIFO</strong></td>
-          <td style="text-align: left">淘汰进入内存时间最早的页面。</td>
-          <td style="text-align: left"><strong>队列</strong> ：按调入顺序链接页面。</td>
-          <td style="text-align: left">始终淘汰位于队首的页面。新调入页面进入队尾。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>LRU</strong></td>
-          <td style="text-align: left">淘汰距当前时间点最久未被访问的页面。</td>
-          <td style="text-align: left"><strong>栈</strong>或 <strong>寄存器</strong>：需要硬件记录访问时间戳。</td>
-          <td style="text-align: left">每次页面被访问，将其移动至栈顶。淘汰时，直接移除栈底页面。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>近似 LRU</strong></td>
-          <td style="text-align: left">结合循环扫描与访问标记。</td>
-          <td style="text-align: left"><strong>循环链表</strong> + <strong>访问位</strong>：每个页表项设一访问位。</td>
-          <td style="text-align: left">指针循环扫描。若访问位为 1，则将其置 0 并跳过；若访问位为 0，则淘汰该页。</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th style="text-align: left">算法名称</th>
+					<th style="text-align: left">淘汰核心准则</th>
+					<th style="text-align: left">硬件支持/数据结构</th>
+					<th style="text-align: left">淘汰执行过程</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>FIFO</strong></td>
+					<td style="text-align: left">淘汰进入内存时间最早的页面。</td>
+					<td style="text-align: left"><strong>队列</strong> ：按调入顺序链接页面。</td>
+					<td style="text-align: left">始终淘汰位于队首的页面。新调入页面进入队尾。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>LRU</strong></td>
+					<td style="text-align: left">淘汰距当前时间点最久未被访问的页面。</td>
+					<td style="text-align: left"><strong>栈</strong>或 <strong>寄存器</strong>：需要硬件记录访问时间戳。</td>
+					<td style="text-align: left">每次页面被访问，将其移动至栈顶。淘汰时，直接移除栈底页面。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>近似 LRU</strong></td>
+					<td style="text-align: left">结合循环扫描与访问标记。</td>
+					<td style="text-align: left"><strong>循环链表</strong> + <strong>访问位</strong>：每个页表项设一访问位。</td>
+					<td style="text-align: left">指针循环扫描。若访问位为 1，则将其置 0 并跳过；若访问位为 0，则淘汰该页。</td>
+			</tr>
+	</tbody>
 </table>
 <h3 id="段段页式存储">段/段页式存储<a hidden class="anchor" aria-hidden="true" href="#段段页式存储">#</a></h3>
 <p>程序由若干个段组成，由编程时指定。通过段表来完成映射，段表项包括段号，长度和基址。</p>
@@ -471,66 +471,66 @@
 <h3 id="输入输出控制">输入/输出控制<a hidden class="anchor" aria-hidden="true" href="#输入输出控制">#</a></h3>
 <p>通信的方式可以通过特殊的I/O指令，也可以通过主存地址映射。</p>
 <table>
-  <thead>
-      <tr>
-          <th style="text-align: left">控制方式</th>
-          <th style="text-align: left">交换单位</th>
-          <th style="text-align: left">控制逻辑与工作原理</th>
-          <th style="text-align: left">中央处理器干预程度</th>
-          <th style="text-align: left">优点</th>
-          <th style="text-align: left">缺点</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>程序循环测试</strong></td>
-          <td style="text-align: left">字或字节</td>
-          <td style="text-align: left">中央处理器通过程序指令不断读取设备控制器状态位。若设备未就绪，则中央处理器处于忙等状态。</td>
-          <td style="text-align: left"><strong>极高</strong>：中央处理器完全受限于外部设备速度，全程参与状态查询。</td>
-          <td style="text-align: left">硬件结构简单，不需要额外的控制逻辑。</td>
-          <td style="text-align: left">资源利用率极低，中央处理器与外设无法并行工作。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>中断驱动</strong></td>
-          <td style="text-align: left">字或字节</td>
-          <td style="text-align: left">当外部设备准备就绪后向中央处理器发出中断请求，处理器保护现场并转入中断服务程序处理数据。</td>
-          <td style="text-align: left"><strong>较高</strong>：仅在数据准备就绪时干预，但高频中断仍会占用大量处理时间。</td>
-          <td style="text-align: left">实现了中央处理器与外部设备的并行工作。</td>
-          <td style="text-align: left">处理大量数据时频繁产生中断，系统开销显著。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>直接存储器存取</strong></td>
-          <td style="text-align: left">数据块</td>
-          <td style="text-align: left">由专用控制器控制内存与外设直接交换数据，数据流不经过中央处理器寄存器。</td>
-          <td style="text-align: left"><strong>中等</strong>：仅在数据块传输的起始时刻和结束时刻进行干预。</td>
-          <td style="text-align: left">大幅提升了数据块传输效率，减轻了中央处理器的计算负担。</td>
-          <td style="text-align: left">硬件结构较复杂，每个控制器通常仅能管理极少量设备。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>字节多路通道</strong></td>
-          <td style="text-align: left">字节</td>
-          <td style="text-align: left">通道在多个低速设备间通过时间片轮转实现分时并行，每次轮流传输一个字节。</td>
-          <td style="text-align: left"><strong>极低</strong>：中央处理器仅发出启动指令，后续由通道程序自主控制。</td>
-          <td style="text-align: left">可连接大量低速设备，并在逻辑上实现多设备同时运行。</td>
-          <td style="text-align: left">传输效率受限于字节级交换，不适合连接高速外部设备。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>选择通道</strong></td>
-          <td style="text-align: left">数据块</td>
-          <td style="text-align: left">通道在一段时间内被一个高速设备独占，实现内存与外设间连续的数据块传输。</td>
-          <td style="text-align: left"><strong>极低</strong>：中央处理器仅负责任务的初始调度与最终完成确认。</td>
-          <td style="text-align: left">能够支持极高的数据传输速率，满足高速设备需求。</td>
-          <td style="text-align: left">资源利用率不均，通道被独占时其他设备必须挂起等待。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>数组多路通道</strong></td>
-          <td style="text-align: left">数据块</td>
-          <td style="text-align: left">在多个高速设备间轮流分时传输数据块，利用设备寻址的时间空隙进行链路切换。</td>
-          <td style="text-align: left"><strong>极低</strong>：中央处理器与通道之间实现了高度的独立性与并行性。</td>
-          <td style="text-align: left">兼具高速传输能力与多设备并发能力，系统整体吞吐量最高。</td>
-          <td style="text-align: left">硬件控制逻辑最为精密复杂，系统构建成本最高。</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th style="text-align: left">控制方式</th>
+					<th style="text-align: left">交换单位</th>
+					<th style="text-align: left">控制逻辑与工作原理</th>
+					<th style="text-align: left">中央处理器干预程度</th>
+					<th style="text-align: left">优点</th>
+					<th style="text-align: left">缺点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>程序循环测试</strong></td>
+					<td style="text-align: left">字或字节</td>
+					<td style="text-align: left">中央处理器通过程序指令不断读取设备控制器状态位。若设备未就绪，则中央处理器处于忙等状态。</td>
+					<td style="text-align: left"><strong>极高</strong>：中央处理器完全受限于外部设备速度，全程参与状态查询。</td>
+					<td style="text-align: left">硬件结构简单，不需要额外的控制逻辑。</td>
+					<td style="text-align: left">资源利用率极低，中央处理器与外设无法并行工作。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>中断驱动</strong></td>
+					<td style="text-align: left">字或字节</td>
+					<td style="text-align: left">当外部设备准备就绪后向中央处理器发出中断请求，处理器保护现场并转入中断服务程序处理数据。</td>
+					<td style="text-align: left"><strong>较高</strong>：仅在数据准备就绪时干预，但高频中断仍会占用大量处理时间。</td>
+					<td style="text-align: left">实现了中央处理器与外部设备的并行工作。</td>
+					<td style="text-align: left">处理大量数据时频繁产生中断，系统开销显著。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>直接存储器存取</strong></td>
+					<td style="text-align: left">数据块</td>
+					<td style="text-align: left">由专用控制器控制内存与外设直接交换数据，数据流不经过中央处理器寄存器。</td>
+					<td style="text-align: left"><strong>中等</strong>：仅在数据块传输的起始时刻和结束时刻进行干预。</td>
+					<td style="text-align: left">大幅提升了数据块传输效率，减轻了中央处理器的计算负担。</td>
+					<td style="text-align: left">硬件结构较复杂，每个控制器通常仅能管理极少量设备。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>字节多路通道</strong></td>
+					<td style="text-align: left">字节</td>
+					<td style="text-align: left">通道在多个低速设备间通过时间片轮转实现分时并行，每次轮流传输一个字节。</td>
+					<td style="text-align: left"><strong>极低</strong>：中央处理器仅发出启动指令，后续由通道程序自主控制。</td>
+					<td style="text-align: left">可连接大量低速设备，并在逻辑上实现多设备同时运行。</td>
+					<td style="text-align: left">传输效率受限于字节级交换，不适合连接高速外部设备。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>选择通道</strong></td>
+					<td style="text-align: left">数据块</td>
+					<td style="text-align: left">通道在一段时间内被一个高速设备独占，实现内存与外设间连续的数据块传输。</td>
+					<td style="text-align: left"><strong>极低</strong>：中央处理器仅负责任务的初始调度与最终完成确认。</td>
+					<td style="text-align: left">能够支持极高的数据传输速率，满足高速设备需求。</td>
+					<td style="text-align: left">资源利用率不均，通道被独占时其他设备必须挂起等待。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>数组多路通道</strong></td>
+					<td style="text-align: left">数据块</td>
+					<td style="text-align: left">在多个高速设备间轮流分时传输数据块，利用设备寻址的时间空隙进行链路切换。</td>
+					<td style="text-align: left"><strong>极低</strong>：中央处理器与通道之间实现了高度的独立性与并行性。</td>
+					<td style="text-align: left">兼具高速传输能力与多设备并发能力，系统整体吞吐量最高。</td>
+					<td style="text-align: left">硬件控制逻辑最为精密复杂，系统构建成本最高。</td>
+			</tr>
+	</tbody>
 </table>
 <h2 id="cpt9-文件系统">Cpt9 文件系统<a hidden class="anchor" aria-hidden="true" href="#cpt9-文件系统">#</a></h2>
 <h3 id="逻辑记录和物理记录">逻辑记录和物理记录<a hidden class="anchor" aria-hidden="true" href="#逻辑记录和物理记录">#</a></h3>
@@ -564,40 +564,40 @@
 <li><strong>C</strong> 允许修改文件属性，为文件拥有者所有</li>
 </ul>
 <table>
-  <thead>
-      <tr>
-          <th style="text-align: left">安全机制</th>
-          <th style="text-align: left">实现方式</th>
-          <th style="text-align: left">优点</th>
-          <th style="text-align: left">缺点</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td style="text-align: left"><strong>访问控制矩阵</strong></td>
-          <td style="text-align: left">使用二维矩阵表示。行代表<strong>用户</strong>，列代表<strong>文件</strong>。交叉单元格记录该主体对该客体拥有的权限。</td>
-          <td style="text-align: left">概念直观、逻辑清晰。能够完整地描述系统中所有主体与客体之间的权限关系。</td>
-          <td style="text-align: left">在大型系统中，矩阵通常极度稀疏，导致存储空间极大浪费；维护与动态修改效率低下。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>存取控制表</strong></td>
-          <td style="text-align: left">以<strong>文件</strong>为中心。为每个资源关联一个列表，记录所有允许访问该资源的用户及其对应的权限。</td>
-          <td style="text-align: left">易于查阅和管理特定资源的访问情况。在删除资源时，关联的控制表可以一并销毁，管理便捷。</td>
-          <td style="text-align: left">难以快速查询特定主体拥有的所有权限。当用户数量庞大时，列表可能变得过长。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>用户权限表</strong></td>
-          <td style="text-align: left">以<strong>用户</strong>为中心。为每个用户关联一个权限清单，记录该用户被授权访问的所有资源及其操作权限。</td>
-          <td style="text-align: left">易于查询和管理特定主体的权限集合。在用户离职或权限变更时，只需修改该用户对应的权限表即可，安全性响应快。</td>
-          <td style="text-align: left">难以确定特定资源的授权分布情况。在回收某个特定资源的权限时，需遍历所有用户的权限表。</td>
-      </tr>
-      <tr>
-          <td style="text-align: left"><strong>口令和密码</strong></td>
-          <td style="text-align: left">通过用户持有的私密信息进行身份鉴别。系统通常存储口令的单向哈希值，在登录时进行匹配比对。</td>
-          <td style="text-align: left">实现成本极低，用户接受度高，是系统进入的第一道防线。不需要复杂的硬件支持。</td>
-          <td style="text-align: left">存在弱口令风险，极易受到社会工程学、字典攻击或暴力破解。若存储文件被泄露且未加密处理，会导致大规模身份被冒用。</td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th style="text-align: left">安全机制</th>
+					<th style="text-align: left">实现方式</th>
+					<th style="text-align: left">优点</th>
+					<th style="text-align: left">缺点</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: left"><strong>访问控制矩阵</strong></td>
+					<td style="text-align: left">使用二维矩阵表示。行代表<strong>用户</strong>，列代表<strong>文件</strong>。交叉单元格记录该主体对该客体拥有的权限。</td>
+					<td style="text-align: left">概念直观、逻辑清晰。能够完整地描述系统中所有主体与客体之间的权限关系。</td>
+					<td style="text-align: left">在大型系统中，矩阵通常极度稀疏，导致存储空间极大浪费；维护与动态修改效率低下。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>存取控制表</strong></td>
+					<td style="text-align: left">以<strong>文件</strong>为中心。为每个资源关联一个列表，记录所有允许访问该资源的用户及其对应的权限。</td>
+					<td style="text-align: left">易于查阅和管理特定资源的访问情况。在删除资源时，关联的控制表可以一并销毁，管理便捷。</td>
+					<td style="text-align: left">难以快速查询特定主体拥有的所有权限。当用户数量庞大时，列表可能变得过长。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>用户权限表</strong></td>
+					<td style="text-align: left">以<strong>用户</strong>为中心。为每个用户关联一个权限清单，记录该用户被授权访问的所有资源及其操作权限。</td>
+					<td style="text-align: left">易于查询和管理特定主体的权限集合。在用户离职或权限变更时，只需修改该用户对应的权限表即可，安全性响应快。</td>
+					<td style="text-align: left">难以确定特定资源的授权分布情况。在回收某个特定资源的权限时，需遍历所有用户的权限表。</td>
+			</tr>
+			<tr>
+					<td style="text-align: left"><strong>口令和密码</strong></td>
+					<td style="text-align: left">通过用户持有的私密信息进行身份鉴别。系统通常存储口令的单向哈希值，在登录时进行匹配比对。</td>
+					<td style="text-align: left">实现成本极低，用户接受度高，是系统进入的第一道防线。不需要复杂的硬件支持。</td>
+					<td style="text-align: left">存在弱口令风险，极易受到社会工程学、字典攻击或暴力破解。若存储文件被泄露且未加密处理，会导致大规模身份被冒用。</td>
+			</tr>
+	</tbody>
 </table>
 <h4 id="查找加速">查找加速<a hidden class="anchor" aria-hidden="true" href="#查找加速">#</a></h4>
 <p>可以使用建立当前目录（cwd）和链接技术来快速的访问。其中链接技术就是向文件树里面添加对于其他的目录表项的链接，类似于快捷方式。因此需要维护“连访属性”（指向文件还是目录表项）和“引用计数”，只用没有人引用了才能真正删除文件。</p>

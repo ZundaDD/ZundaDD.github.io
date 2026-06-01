@@ -4,11 +4,18 @@
     <title>C#搬运 on 长谷川蜜柑之窝</title>
     <link>https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/</link>
     <description>Recent content in C#搬运 on 长谷川蜜柑之窝</description>
-    <generator>Hugo -- 0.161.1</generator>
+    <generator>Hugo -- 0.162.1</generator>
     <language>zh-cn</language>
     <copyright>Hasekawa Mikan</copyright>
-    <lastBuildDate>Sat, 09 May 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用MonoMod为你的游戏生成Hook</title>
+      <link>https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/</link>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/</guid>
+      <description>技术性总结</description>
+    </item>
     <item>
       <title>泰拉瑞亚mod开发笔记 2</title>
       <link>https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/tmodloader2/</link>

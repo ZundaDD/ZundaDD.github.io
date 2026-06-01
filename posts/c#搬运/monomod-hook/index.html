@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>使用MonoMod为你的游戏生成Hook | 长谷川蜜柑之窝</title>
+<meta name="keywords" content="C#, MonoMod">
+<meta name="description" content="技术性总结">
+<meta name="author" content="Hasekawa Mikan">
+<link rel="canonical" href="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.f6bf338bdb9de6acf40b7704c5d84f185e0b81d7bf95b2043c02907b832618c3.css" integrity="sha256-9r8zi9ud5qz0C3cExdhPGF4Lgde/lbIEPAKQe4MmGMM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://zundadd.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://zundadd.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://zundadd.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh-cn" href="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+      integrity="sha384-hNLMp0pT8wrFMnkhJfMYB6lHbLpyjhUgG2jnOBMJJr0HMsRMgfl3DPKV+GtIiO4"
+      crossorigin="anonymous">
+<meta property="og:url" content="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/">
+  <meta property="og:site_name" content="长谷川蜜柑之窝">
+  <meta property="og:title" content="使用MonoMod为你的游戏生成Hook">
+  <meta property="og:description" content="技术性总结">
+  <meta property="og:locale" content="zh-cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-06-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-06-01T00:00:00+00:00">
+    <meta property="og:image" content="https://zundadd.github.io/covers/cover001.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zundadd.github.io/covers/cover001.jpg">
+<meta name="twitter:title" content="使用MonoMod为你的游戏生成Hook">
+<meta name="twitter:description" content="技术性总结">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章列表",
+      "item": "https://zundadd.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "使用MonoMod为你的游戏生成Hook",
+      "item": "https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "使用MonoMod为你的游戏生成Hook",
+  "name": "使用MonoMod为你的游戏生成Hook",
+  "description": "技术性总结",
+  "keywords": [
+    "C#", "MonoMod"
+  ],
+  "articleBody": "序：什么是MonoMod MonoMod是一个为程序提供Mod接口的工具链，包含了IL Editing，RuntimeDetour等功能。这里主要介绍MonoMod的HookGen功能，即为每一个函数提供Hook接口以供外部Mod拦截或修改。\n由于MonoMod是一个基于Net5.0的项目，导致在高版本项目中需要做一些适配。\n准备：程序集加载 Mod的核心是一个dll文件，需要能够动态加载，动态卸载。\n在C#中，加载dll很简单，让我们看以下的例子：\nvar asm = Assembly.LoadFrom(dllPath); var modTypes = asm.GetTypes().Where(t =\u003e typeof(IMod).IsAssignableFrom(t) \u0026\u0026 !t.IsInterface \u0026\u0026 !t.IsAbstract); foreach (var type in modTypes) { Log.I($\"Found mod: {type.Name}\"); if (Activator.CreateInstance(type) is IMod mod) { mod.OnLoad(); LoadedMods.Add(mod); Log.I($\"[ModLoader] Loaded mod: {mod.Name}\"); } } 接下来做一个最简单的mod示例，新建一个类库项目并引用游戏的dll文件，然后做一个什么都不干的IMod实例：\npublic class TestMod : IMod { public string Name =\u003e \"Test Mod\"; public void OnLoad() { } public void OnUnload() { } } 启动游戏，mod程序集可以被加载了：\n怎么用：指南 生成MMHOOK_XXX.dll 首先你需要找到MonoMod的Release：https://github.com/MonoMod/MonoMod/releases/tag/v22.07.31.01，然后解压到一个合适的，能够被很方便地引用的路径。然后修改MonoMod.RuntimeDetour.HookGen.runtimeconfig.json这个文件，将其中的框架改为你需要的net版本。\n\"tfm\": \"net5.0\", // -\u003e net8.0 \"framework\": { \"name\": \"Microsoft.NETCore.App\", \"version\": \"5.0.0\" // -\u003e 8.0.xxx } 每次Build需要做以下几件事：\n将Mod项目需要的程序集引用复制到一个相对稳定的文件夹供Mod项目引用\n使用MonoMod.RuntimeDetour.HookGen.exe生成On/IL Hook程序集\n将Hook程序集复制回到引擎启动游戏的临时路径（比如Godot中的.godot/mono/temp/bin/Debug）\n对应的自动化BuildTask如下：\n",
+  "wordCount" : "3097",
+  "inLanguage": "zh-cn",
+  "image":"https://zundadd.github.io/covers/cover001.jpg","datePublished": "2026-06-01T00:00:00Z",
+  "dateModified": "2026-06-01T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Hasekawa Mikan"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "长谷川蜜柑之窝",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://zundadd.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://zundadd.github.io/" accesskey="h" title="长谷川蜜柑之窝 (Alt + H)">长谷川蜜柑之窝</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://zundadd.github.io/archives/" title="时间轴">
+                    <span>时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://zundadd.github.io/diary/" title="日记">
+                    <span>日记</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://zundadd.github.io/works/" title="作品">
+                    <span>作品</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://zundadd.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://zundadd.github.io/posts/">文章列表</a></div>
+    <h1 class="post-title entry-hint-parent">
+      使用MonoMod为你的游戏生成Hook
+    </h1>
+    <div class="post-meta"><span title='2026-06-01 00:00:00 +0000 UTC'>June 1, 2026</span>&nbsp;·&nbsp;Hasekawa Mikan
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="https://zundadd.github.io/covers/cover001.jpg" alt="">
+        
+</figure>
+  <div class="post-content"><h1 id="序什么是monomod">序：什么是MonoMod<a hidden class="anchor" aria-hidden="true" href="#序什么是monomod">#</a></h1>
+<p>MonoMod是一个为程序提供Mod接口的工具链，包含了IL Editing，RuntimeDetour等功能。这里主要介绍MonoMod的HookGen功能，即为每一个函数提供Hook接口以供外部Mod拦截或修改。</p>
+<p>由于MonoMod是一个基于Net5.0的项目，导致在高版本项目中需要做一些适配。</p>
+<h1 id="准备程序集加载">准备：程序集加载<a hidden class="anchor" aria-hidden="true" href="#准备程序集加载">#</a></h1>
+<p>Mod的核心是一个dll文件，需要能够动态加载，动态卸载。</p>
+<p>在C#中，加载dll很简单，让我们看以下的例子：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">asm</span> <span class="p">=</span> <span class="n">Assembly</span><span class="p">.</span><span class="n">LoadFrom</span><span class="p">(</span><span class="n">dllPath</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">modTypes</span> <span class="p">=</span> <span class="n">asm</span><span class="p">.</span><span class="n">GetTypes</span><span class="p">().</span><span class="n">Where</span><span class="p">(</span><span class="n">t</span> <span class="p">=&gt;</span> <span class="k">typeof</span><span class="p">(</span><span class="n">IMod</span><span class="p">).</span><span class="n">IsAssignableFrom</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="n">t</span><span class="p">.</span><span class="n">IsInterface</span> <span class="p">&amp;&amp;</span> <span class="p">!</span><span class="n">t</span><span class="p">.</span><span class="n">IsAbstract</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">type</span> <span class="k">in</span> <span class="n">modTypes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Log</span><span class="p">.</span><span class="n">I</span><span class="p">(</span><span class="s">$&#34;Found mod: {type.Name}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">Activator</span><span class="p">.</span><span class="n">CreateInstance</span><span class="p">(</span><span class="n">type</span><span class="p">)</span> <span class="k">is</span> <span class="n">IMod</span> <span class="n">mod</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mod</span><span class="p">.</span><span class="n">OnLoad</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">LoadedMods</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">mod</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Log</span><span class="p">.</span><span class="n">I</span><span class="p">(</span><span class="s">$&#34;[ModLoader] Loaded mod: {mod.Name}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>接下来做一个最简单的mod示例，新建一个类库项目并引用游戏的dll文件，然后做一个什么都不干的IMod实例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">TestMod</span> <span class="p">:</span> <span class="n">IMod</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">=&gt;</span> <span class="s">&#34;Test Mod&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="k">void</span> <span class="n">OnLoad</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="k">void</span> <span class="n">OnUnload</span><span class="p">()</span> <span class="p">{</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>启动游戏，mod程序集可以被加载了：</p>
+<img src="1.png" style="zoom:67%;" />
+<h1 id="怎么用指南">怎么用：指南<a hidden class="anchor" aria-hidden="true" href="#怎么用指南">#</a></h1>
+<h2 id="生成mmhook_xxxdll">生成MMHOOK_XXX.dll<a hidden class="anchor" aria-hidden="true" href="#生成mmhook_xxxdll">#</a></h2>
+<p>首先你需要找到MonoMod的Release：https://github.com/MonoMod/MonoMod/releases/tag/v22.07.31.01，然后解压到一个合适的，能够被很方便地引用的路径。然后修改MonoMod.RuntimeDetour.HookGen.runtimeconfig.json这个文件，将其中的框架改为你需要的net版本。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="s2">&#34;tfm&#34;</span><span class="err">:</span> <span class="s2">&#34;net5.0&#34;</span><span class="err">,</span> <span class="c1">// -&gt; net8.0
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;framework&#34;</span><span class="err">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;Microsoft.NETCore.App&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;version&#34;</span><span class="p">:</span> <span class="s2">&#34;5.0.0&#34;</span> <span class="c1">// -&gt; 8.0.xxx
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>每次Build需要做以下几件事：</p>
+<ol>
+<li>
+<p>将Mod项目需要的程序集引用复制到一个相对稳定的文件夹供Mod项目引用</p>
+</li>
+<li>
+<p>使用MonoMod.RuntimeDetour.HookGen.exe生成On/IL Hook程序集</p>
+</li>
+<li>
+<p>将Hook程序集复制回到引擎启动游戏的临时路径（比如Godot中的.godot/mono/temp/bin/Debug）</p>
+</li>
+</ol>
+<p>对应的自动化BuildTask如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Target</span> <span class="na">Name=</span><span class="s">&#34;PublishModSDK&#34;</span> <span class="na">AfterTargets=</span><span class="s">&#34;Build&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;MakeDir</span> <span class="na">Directories=</span><span class="s">&#34;$(SDKDir)&#34;</span> <span class="na">Condition=</span><span class="s">&#34;!Exists(&#39;$(SDKDir)&#39;)&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Copy</span> <span class="na">SourceFiles=</span><span class="s">&#34;$(TargetPath)&#34;</span> <span class="na">DestinationFolder=</span><span class="s">&#34;$(SDKDir)&#34;</span> <span class="na">SkipUnchangedFiles=</span><span class="s">&#34;true&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 生成Hook程序集 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Exec</span> <span class="na">Command=</span><span class="s">&#34;&amp;quot;$(HookGenExe)&amp;quot; &amp;quot;$(SDKDir)BYDNinjaWar.dll&amp;quot;&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="na">WorkingDirectory=</span><span class="s">&#34;$(SDKDir)&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 后处理Hook程序集 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Exec</span> <span class="na">Command=</span><span class="s">&#34;dotnet run --project &amp;quot;$(ProjectDir)Tools\FixHookGen\FixHookGen.csproj&amp;quot; -- &amp;quot;$(SDKDir)MMHOOK_BYDNinjaWar.dll&amp;quot;&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Copy</span> <span class="na">SourceFiles=</span><span class="s">&#34;$(SDKDir)MMHOOK_BYDNinjaWar.dll&#34;</span> <span class="na">DestinationFolder=</span><span class="s">&#34;$(TargetDir)&#34;</span> <span class="na">SkipUnchangedFiles=</span><span class="s">&#34;true&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Copy</span> <span class="na">SourceFiles=</span><span class="s">&#34;$(ProjectDir)BYDNinjaWar.targets&#34;</span> <span class="na">DestinationFolder=</span><span class="s">&#34;$(SDKDir)&#34;</span> <span class="na">SkipUnchangedFiles=</span><span class="s">&#34;true&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Target&gt;</span>
+</span></span></code></pre></div><h2 id="mod项目模板">Mod项目模板<a hidden class="anchor" aria-hidden="true" href="#mod项目模板">#</a></h2>
+<p>对于Mod项目而言，最好创建一个项目模板，会减少配置的过程，具体而言就是制作一个targets文件，然后供Mod项目引用，在这之后你的Mod项目从创建到配置将会非常简单。</p>
+<p>在控制台中运行<code>dotnet new classlib -n BYDModWar</code>，然后修改csproj文件引用targets文件即可：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Project</span> <span class="na">Sdk=</span><span class="s">&#34;Microsoft.NET.Sdk&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;Import</span> <span class="na">Project=</span><span class="s">&#34;..\BYDNinjaWar\ModSDK\BYDNinjaWar.targets&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Project&gt;</span>
+</span></span></code></pre></div><p>targets文件的内容包括对必要程序集的&lt;Reference&gt;，以及项目框架、输出等约束，最后再加上一个自动复制到加载Mod的目录当中。比如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl"><span class="nt">&lt;Target</span> <span class="na">Name=</span><span class="s">&#34;DeployMod&#34;</span> <span class="na">AfterTargets=</span><span class="s">&#34;Build&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;MakeDir</span> <span class="na">Directories=</span><span class="s">&#34;$(NinjaWarModsDir)&#34;</span> <span class="na">Condition=</span><span class="s">&#34;!Exists(&#39;$(NinjaWarModsDir)&#39;)&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Copy</span> <span class="na">SourceFiles=</span><span class="s">&#34;$(TargetPath)&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="na">DestinationFolder=</span><span class="s">&#34;$(NinjaWarModsDir)&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="na">SkipUnchangedFiles=</span><span class="s">&#34;true&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Copy</span> <span class="na">SourceFiles=</span><span class="s">&#34;$(TargetDir)$(TargetName).pdb&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="na">DestinationFolder=</span><span class="s">&#34;$(NinjaWarModsDir)&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="na">SkipUnchangedFiles=</span><span class="s">&#34;true&#34;</span>
+</span></span><span class="line"><span class="cl">          <span class="na">Condition=</span><span class="s">&#34;&#39;$(Configuration)&#39; == &#39;Debug&#39; AND Exists(&#39;$(TargetDir)$(TargetName).pdb&#39;)&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;/Target&gt;</span>
+</span></span></code></pre></div><h1 id="coreonil-hook">Core：On/IL Hook<a hidden class="anchor" aria-hidden="true" href="#coreonil-hook">#</a></h1>
+<p>有的时候，我们需要修改原版函数，那么就需要提供一个Hook接口能够动态的拦截原版函数，或者从IL的层面去编辑原版函数。MonoMod给出了一个方便的Hook生成工具HookGen，它会自动根据你的dll去生成每一个函数的On Hook和IL Hook，前者是拦截，后者是编辑。</p>
+<h2 id="on-hook">On Hook<a hidden class="anchor" aria-hidden="true" href="#on-hook">#</a></h2>
+<p>先说On Hook，有的时候，我们需要拦截原版函数，对其做出条件判断，或者根据其执行情况再额外执行逻辑。这个时候我们就需要对原版函数的调用进行操控，做法就是嵌套On Hook。嵌套On Hook对于每一次注册，都会将实际执行的函数替换为传进来的函数，而传进来的函数的形式长什么样呢，举个例子：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">partial</span> <span class="k">class</span> <span class="nc">GainLeikra</span> <span class="p">:</span> <span class="n">ItemEffect</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="na">    [Export]</span> <span class="kd">private</span> <span class="kt">int</span> <span class="n">leikraCount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">override</span> <span class="k">void</span> <span class="n">Do</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">var</span> <span class="n">sys</span> <span class="p">=</span> <span class="n">MainProgram</span><span class="p">.</span><span class="n">I</span><span class="p">.</span><span class="n">CombatContext</span><span class="p">.</span><span class="n">EquipSystem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sys</span><span class="p">.</span><span class="n">TotalLeikra</span> <span class="p">+=</span> <span class="n">leikraCount</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>假如我们想拦截这个函数，让其只有一半的概率触发，那么对应的Hook函数如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">static</span> <span class="k">void</span> <span class="n">OnGainLeikra</span><span class="p">(</span><span class="n">On</span><span class="p">.</span><span class="n">NinjaWar</span><span class="p">.</span><span class="n">System</span><span class="p">.</span><span class="n">Shop</span><span class="p">.</span><span class="n">Impl</span><span class="p">.</span><span class="n">GainLeikra</span><span class="p">.</span><span class="n">orig_Do</span> <span class="n">orig</span><span class="p">,</span> <span class="n">GainLeikra</span> <span class="n">self</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ModLogger</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&#34;Half chance&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">orig</span><span class="p">.</span><span class="n">Judge</span><span class="p">(</span><span class="m">0.5f</span><span class="p">)?.</span><span class="n">Invoke</span><span class="p">(</span><span class="n">self</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">On</span><span class="p">.</span><span class="n">NinjaWar</span><span class="p">.</span><span class="n">System</span><span class="p">.</span><span class="n">Shop</span><span class="p">.</span><span class="n">Impl</span><span class="p">.</span><span class="n">GainLeikra</span><span class="p">.</span><span class="n">Do</span> <span class="p">+=</span> <span class="n">OnGainLeikra</span><span class="p">;</span>
+</span></span></code></pre></div><p>Do函数的调用参数是GainLeikra(this隐藏)，而Hook函数需要包含Do函数的所有参数，同时加上一个和Do函数本身签名一致的回调orig。如果orig有返回值，那么这个返回值也可以被利用于执行额外的逻辑。</p>
+<p>换句话说On Hook形成了一个拦截调用链，后注册的函数能够决定先注册的函数能否被调用，以及返回结果如何被利用，而第一个“注册”的函数就是原版函数</p>
+<h2 id="il-hook">IL Hook<a hidden class="anchor" aria-hidden="true" href="#il-hook">#</a></h2>
+<p>再说IL Hook，有的时候，我们只需要修改原版函数的一点小小的逻辑，如果使用On Hook需要把原版函数复制一遍。这个时候我们就需要直接修改原版函数，做法就是IL-Editing，也就是修改原版代码生成的IL中间语言。先看一个示例，这里的道具效果是：“获取X点代币”，目标是改成“获取X*2点代币”。以下是IL代码：</p>
+<img src="2.png" style="zoom:50%;" />
+<p>可以看出，我们需要在IL_0019: ldfld这一行之后插入一个*2的逻辑，那么我们需要首先定位到这一行，然后插入需要的IL代码。MonoMod.Cil和Mono.Cecil.Cil提供了方便快捷的IL-Editing工具，可以让我们像读写文件一样修改IL代码，实现如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">void</span> <span class="n">ILToken</span><span class="p">(</span><span class="n">ILContext</span> <span class="n">ctx</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">var</span> <span class="n">c</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ILCursor</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//定位</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="p">.</span><span class="n">TryGotoNext</span><span class="p">(</span><span class="n">MoveType</span><span class="p">.</span><span class="n">After</span><span class="p">,</span> <span class="n">i</span> <span class="p">=&gt;</span> <span class="n">i</span><span class="p">.</span><span class="n">OpCode</span> <span class="p">==</span> <span class="n">OpCodes</span><span class="p">.</span><span class="n">Ldfld</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//修改</span>
+</span></span><span class="line"><span class="cl">        <span class="n">c</span><span class="p">.</span><span class="n">Emit</span><span class="p">(</span><span class="n">OpCodes</span><span class="p">.</span><span class="n">Ldc_I4_2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">c</span><span class="p">.</span><span class="n">Emit</span><span class="p">(</span><span class="n">OpCodes</span><span class="p">.</span><span class="n">Mul</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>给出越详细的上下文，定位就更准确，这一点对于大型函数定位尤其重要，为了避免误伤无关的代码，我们可能需要将要修改处代码的前后文一并作为GotoNext的判据。这里由于函数比较简单，就直接匹配操作码为ldfld的这一行。</p>
+<p>至于具体怎么操作IL代码，我相信AI的能力肯定足够用来帮你写了。</p>
+<h1 id="后处理热冷修复">后处理：热(冷)修复<a hidden class="anchor" aria-hidden="true" href="#后处理热冷修复">#</a></h1>
+<h2 id="报错">报错<a hidden class="anchor" aria-hidden="true" href="#报错">#</a></h2>
+<p>当你急头白脸地打开Mod项目，想要进行一个一个一个的写的时候，你会发现一个报错：</p>
+<img src="3.png" style="zoom:67%;" />
+<p>欸，文档上就是这么写的，如果你尝试编译，你会发现一个更加神秘的报错：</p>
+<blockquote>
+<p>error CS0012: 类型“MulticastDelegate”在未引用的程序集中定义。必须添加对程序集“System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e”的引用。</p>
+</blockquote>
+<p>这里就涉及到C# dotnet对于dll文件的管理了，在dotnet中，程序集分为两类，“类似”于头文件和c文件之间的关系。Private字面意思就是不应该被直接引用的程序集，它是System.Runtime中定义的API的实现，使用CLR内部类型，内部实现可变。在启动时，会自动根据System.Runtime的引用来加载对应的System.Private.XXX.dll。</p>
+<p>使用dnSpy查看生成的Hook程序集，发现问题出在根引用下出现了一个重复的System.Private.CoreLib，它本来应该呆在System.Runtime的下面。</p>
+<img src="4.png" style="zoom:67%;" />
+<p>如果强行提供一个System.Private.CoreLib，会出现重复定义的问题，因为Runtime下面的dll是一定会被加载的。那么解决方案就显而易见了，我们需要修改dll文件，来去掉这一个引用，同时将使用了该dll的变量类型重定向。</p>
+<h2 id="冷修复">冷修复<a hidden class="anchor" aria-hidden="true" href="#冷修复">#</a></h2>
+<p>在原版项目下建立一个子项目，弄一个修复脚本来后处理Hook程序集，然后把这个脚本加入项目的BuildTask中。读取程序集之后，我们可以利用Mono.Cecil工具来编辑。</p>
+<p>大致要做的事情有：</p>
+<ol>
+<li>
+<p>确保存在System.Runtime根引用，如果没有就手动加入，以及根目录下面没有System.Private.CoreLib，没有就不用处理了</p>
+</li>
+<li>
+<p>将所有引用了根CoreLib中的类型引用（TypeReference）修改为引用System.Runtime，这样运行时就会自动重定向</p>
+</li>
+<li>
+<p>删掉根System.Private.CoreLib引用</p>
+</li>
+</ol>
+<p>至此冷修复完成，现在Hook程序集能够被正常的引用。参考：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c#" data-lang="c#"><span class="line"><span class="cl"><span class="c1">// 读取程序集</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">var</span> <span class="n">asm</span> <span class="p">=</span> <span class="n">AssemblyDefinition</span><span class="p">.</span><span class="n">ReadAssembly</span><span class="p">(</span><span class="n">mmhookPath</span><span class="p">,</span> <span class="n">readerParams</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">module</span> <span class="p">=</span> <span class="n">asm</span><span class="p">.</span><span class="n">MainModule</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Step 1</span>
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">privateCorLib</span> <span class="p">=</span> <span class="n">module</span><span class="p">.</span><span class="n">AssemblyReferences</span><span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">(</span><span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">&#34;System.Private.CoreLib&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span><span class="p">(</span><span class="n">privateCorLib</span> <span class="p">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">runtimeRef</span> <span class="p">=</span> <span class="n">module</span><span class="p">.</span><span class="n">AssemblyReferences</span><span class="p">.</span><span class="n">FirstOrDefault</span><span class="p">(</span><span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">&#34;System.Runtime&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">runtimeRef</span> <span class="p">=</span> <span class="k">new</span> <span class="n">AssemblyNameReference</span><span class="p">(</span><span class="s">&#34;System.Runtime&#34;</span><span class="p">,</span> <span class="k">new</span> <span class="n">Version</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">PublicKeyToken</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="p">[]</span> <span class="p">{</span> <span class="m">0xb0</span><span class="p">,</span> <span class="m">0x3f</span><span class="p">,</span> <span class="m">0x5f</span><span class="p">,</span> <span class="m">0x7f</span><span class="p">,</span> <span class="m">0x11</span><span class="p">,</span> <span class="m">0xd5</span><span class="p">,</span> <span class="m">0x0a</span><span class="p">,</span> <span class="m">0x3a</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="n">module</span><span class="p">.</span><span class="n">AssemblyReferences</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">runtimeRef</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Step 2</span>
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">typeRef</span> <span class="k">in</span> <span class="n">module</span><span class="p">.</span><span class="n">GetTypeReferences</span><span class="p">())</span> <span class="n">FixScope</span><span class="p">(</span><span class="n">typeRef</span><span class="p">,</span> <span class="n">runtimeRef</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">memberRef</span> <span class="k">in</span> <span class="n">module</span><span class="p">.</span><span class="n">GetMemberReferences</span><span class="p">())</span> <span class="n">FixTypeRefRecursive</span><span class="p">(</span><span class="n">memberRef</span><span class="p">.</span><span class="n">DeclaringType</span><span class="p">,</span> <span class="n">runtimeRef</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="n">FixAllTypes</span><span class="p">(</span><span class="n">module</span><span class="p">.</span><span class="n">Types</span><span class="p">,</span> <span class="n">runtimeRef</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Step 3</span>
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">toRemove</span> <span class="p">=</span> <span class="n">module</span><span class="p">.</span><span class="n">AssemblyReferences</span><span class="p">.</span><span class="n">Where</span><span class="p">(</span><span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">&#34;System.Private.CoreLib&#34;</span><span class="p">).</span><span class="n">ToList</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">r</span> <span class="k">in</span> <span class="n">toRemove</span><span class="p">)</span> <span class="n">module</span><span class="p">.</span><span class="n">AssemblyReferences</span><span class="p">.</span><span class="n">Remove</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 修复单个引用的函数，需要额外的递归的函数来处理所有可能的引用</span>
+</span></span><span class="line"><span class="cl"><span class="kd">private</span> <span class="kd">static</span> <span class="k">void</span> <span class="n">FixScope</span><span class="p">(</span><span class="n">TypeReference</span> <span class="n">typeRef</span><span class="p">,</span> <span class="n">AssemblyNameReference</span> <span class="n">runtimeRef</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">typeRef</span><span class="p">.</span><span class="n">Scope</span> <span class="k">is</span> <span class="n">AssemblyNameReference</span> <span class="n">scope</span> <span class="p">&amp;&amp;</span> <span class="n">scope</span><span class="p">.</span><span class="n">Name</span> <span class="p">==</span> <span class="s">&#34;System.Private.CoreLib&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">typeRef</span><span class="p">.</span><span class="n">Scope</span> <span class="p">=</span> <span class="n">runtimeRef</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+<nav class="paginav">
+  <a class="next" href="https://zundadd.github.io/posts/%E5%81%9A%E9%A2%98%E6%90%AC%E8%BF%90/pcstructure/">
+    <span class="title"> »</span>
+    <br>
+    <span>计算机系统结构复习</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>Hasekawa Mikan</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -573,80 +573,80 @@ CPI = \frac{\sum_{i=1}^{n} (CPI_i \times IC_i)}{IC} = \sum_{i=1}^{n} \left( CPI_
 </li>
 </ol>
 <table>
-  <thead>
-      <tr>
-          <th><strong>RAID级别</strong></th>
-          <th><strong>可容忍故障数，数据盘为8时检测盘数</strong></th>
-          <th>做法</th>
-          <th><strong>优点</strong></th>
-          <th><strong>缺点</strong></th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><strong>0</strong> 非冗余，条带存放</td>
-          <td>0，0</td>
-          <td>无冗余信息</td>
-          <td>没有空间开销</td>
-          <td>没有纠错能力</td>
-      </tr>
-      <tr>
-          <td><strong>1</strong> 镜像</td>
-          <td>1，8</td>
-          <td>对所有的磁盘数据提供一份冗余的备份</td>
-          <td>不需要计算奇偶校验，数据恢复快，读数据快。小规模写操作比更高级别的RAID快</td>
-          <td>成本最大</td>
-      </tr>
-      <tr>
-          <td><strong>2</strong> 存储器式ECC</td>
-          <td>1，4</td>
-          <td>按汉明纠错码的思路构建</td>
-          <td>不依靠故障盘进行自诊断</td>
-          <td>检测空间开销的级别是 log2(m)级</td>
-      </tr>
-      <tr>
-          <td><strong>3</strong> 位交叉奇偶校验</td>
-          <td>1，4</td>
-          <td>粒度小，可以是1个字节或者1位</td>
-          <td>检测空间开销小，大规模读写操作的带宽高</td>
-          <td>对小规模、随机的读写操作没有提供特别的支持</td>
-      </tr>
-      <tr>
-          <td><strong>4</strong> 块交叉奇偶校验</td>
-          <td>1，1</td>
-          <td>粒度大</td>
-          <td>检测空间开销小，小规模的读操作带宽更高</td>
-          <td>校验盘是小规模写的瓶颈</td>
-      </tr>
-      <tr>
-          <td><strong>5</strong> 块交叉分布奇偶校验</td>
-          <td>1，1</td>
-          <td>数据以块交叉的方式存于各盘，奇偶校验信息均匀分布在所有磁盘上</td>
-          <td>检测空间开销小，小规模的读写操作带宽更高</td>
-          <td>小规模写操作需要访问磁盘4次</td>
-      </tr>
-      <tr>
-          <td><strong>6</strong> P+Q双奇偶校验</td>
-          <td>2，2</td>
-          <td></td>
-          <td>具有容忍2个故障的能力</td>
-          <td>小规模写操作需要访问磁盘6次，检测空间开销加倍（与RAID3、4、5比较）</td>
-      </tr>
-      <tr>
-          <td><strong>10</strong> 镜像+条带</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-      </tr>
-      <tr>
-          <td><strong>01</strong> 条带+镜像</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-      </tr>
-  </tbody>
+	<thead>
+			<tr>
+					<th><strong>RAID级别</strong></th>
+					<th><strong>可容忍故障数，数据盘为8时检测盘数</strong></th>
+					<th>做法</th>
+					<th><strong>优点</strong></th>
+					<th><strong>缺点</strong></th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><strong>0</strong> 非冗余，条带存放</td>
+					<td>0，0</td>
+					<td>无冗余信息</td>
+					<td>没有空间开销</td>
+					<td>没有纠错能力</td>
+			</tr>
+			<tr>
+					<td><strong>1</strong> 镜像</td>
+					<td>1，8</td>
+					<td>对所有的磁盘数据提供一份冗余的备份</td>
+					<td>不需要计算奇偶校验，数据恢复快，读数据快。小规模写操作比更高级别的RAID快</td>
+					<td>成本最大</td>
+			</tr>
+			<tr>
+					<td><strong>2</strong> 存储器式ECC</td>
+					<td>1，4</td>
+					<td>按汉明纠错码的思路构建</td>
+					<td>不依靠故障盘进行自诊断</td>
+					<td>检测空间开销的级别是 log2(m)级</td>
+			</tr>
+			<tr>
+					<td><strong>3</strong> 位交叉奇偶校验</td>
+					<td>1，4</td>
+					<td>粒度小，可以是1个字节或者1位</td>
+					<td>检测空间开销小，大规模读写操作的带宽高</td>
+					<td>对小规模、随机的读写操作没有提供特别的支持</td>
+			</tr>
+			<tr>
+					<td><strong>4</strong> 块交叉奇偶校验</td>
+					<td>1，1</td>
+					<td>粒度大</td>
+					<td>检测空间开销小，小规模的读操作带宽更高</td>
+					<td>校验盘是小规模写的瓶颈</td>
+			</tr>
+			<tr>
+					<td><strong>5</strong> 块交叉分布奇偶校验</td>
+					<td>1，1</td>
+					<td>数据以块交叉的方式存于各盘，奇偶校验信息均匀分布在所有磁盘上</td>
+					<td>检测空间开销小，小规模的读写操作带宽更高</td>
+					<td>小规模写操作需要访问磁盘4次</td>
+			</tr>
+			<tr>
+					<td><strong>6</strong> P+Q双奇偶校验</td>
+					<td>2，2</td>
+					<td></td>
+					<td>具有容忍2个故障的能力</td>
+					<td>小规模写操作需要访问磁盘6次，检测空间开销加倍（与RAID3、4、5比较）</td>
+			</tr>
+			<tr>
+					<td><strong>10</strong> 镜像+条带</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+			</tr>
+			<tr>
+					<td><strong>01</strong> 条带+镜像</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+			</tr>
+	</tbody>
 </table>
 <ol start="7">
 <li>
@@ -986,6 +986,11 @@ CPI = \frac{\sum_{i=1}^{n} (CPI_i \times IC_i)}{IC} = \sum_{i=1}^{n} \left( CPI_
 
   <footer class="post-footer">
 <nav class="paginav">
+  <a class="prev" href="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/monomod-hook/">
+    <span class="title">« </span>
+    <br>
+    <span>使用MonoMod为你的游戏生成Hook</span>
+  </a>
   <a class="next" href="https://zundadd.github.io/posts/c%23%E6%90%AC%E8%BF%90/tmodloader2/">
     <span class="title"> »</span>
     <br>
