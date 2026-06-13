@@ -17,6 +17,7 @@
 017 AssetStudio 1
 018 TmodLoader2
 019 PCStructure
+020 Compile
 
 032 杂谈
 
