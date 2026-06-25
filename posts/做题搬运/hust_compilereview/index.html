@@ -104,8 +104,8 @@
   "keywords": [
     
   ],
-  "articleBody": "编译原理 Cpt 2 文法和语言 基本概念 形式语言是字母表上的符号按一定的规则组成的所有符号串集合；其中的每个符号串称为一个句子。\n字母表∑是非空有穷集合，其元素称为符号。\n符号串是由字母表∑中的符号组成的有穷序列称为 (字母表∑上的)符号串。特别地，不含任何符号的有穷序列称为空串，记为ε。\n单词和源程序都是符号串\n规则以某种形式表达的在一定范围内共同遵守的章程和制度；这里，指符号串的组成规则。\n设a,b为两个符号串，则有以下运算: ",
-  "wordCount" : "14199",
+  "articleBody": "编译原理 Cpt 2 文法和语言 基本概念 形式语言是字母表上的符号按一定的规则组成的所有符号串集合；其中的每个符号串称为一个句子。\n字母表∑是非空有穷集合，其元素称为符号。\n符号串是由字母表∑中的符号组成的有穷序列称为 (字母表∑上的)符号串。特别地，不含任何符号的有穷序列称为空串，记为ε。\n单词和源程序都是符号串\n规则以某种形式表达的在一定范围内共同遵守的章程和制度；这里，指符号串的组成规则。\n设a,b为两个符号串，则有以下运算: 连接：a.b=ab或：a∣b=a或者b方幂：an=aa…a=aan−1=an−1a零幂：a0=ε正闭包：a+=a1∣a2∣…∣an∣…星闭包：a∗=a0∣a1∣a2∣…∣an∣… \\begin{aligned} \u0026\\text{连接：}a.b = ab \\\\ \u0026\\text{或：}a|b = a\\text{或者}b \\\\ \u0026\\text{方幂：}a^n = aa \\ldots a = aa^{n-1} = a^{n-1}a \\\\ \u0026\\text{零幂：}a^0 = \\varepsilon \\\\ \u0026\\text{正闭包：}a^+ = a^1|a^2|\\ldots|a^n|\\ldots \\\\ \u0026\\text{星闭包：}a^* = a^0|a^1|a^2|\\ldots|a^n|\\ldots \\end{aligned} 设 A 和 B 为两个符号串集合，则有以下运算： 乘积：AB={xy∣x∈A 且 y∈B}和：A∪B=A+B={x∣x∈A 或 x∈B}方幂：An=AA…A=AAn−1=An−1A零幂：A0={ε}正闭包：A+=A1∪A2∪…∪An∪…星闭包：A∗=A0∪A1∪A2∪…∪An∪… \\begin{aligned} \u0026\\text{乘积：} AB = \\{ xy \\mid x\\in A \\text{ 且 } y\\in B\\} \\\\ \u0026\\text{和：} A\\cup B = A+B = \\{ x \\mid x\\in A \\text{ 或 } x\\in B\\} \\\\ \u0026\\text{方幂：}A^n = AA\\ldots A = AA^{n-1} = A^{n-1}A \\\\ \u0026\\text{零幂：}A^0 = \\{ \\varepsilon \\} \\\\ \u0026\\text{正闭包：}A^+ = A^1\\cup A^2\\cup\\ldots\\cup A^n\\cup\\ldots \\\\ \u0026\\text{星闭包：}A^* = A^0\\cup A^1\\cup A^2\\cup\\ldots\\cup A^n\\cup\\ldots \\end{aligned} 若 A 为任一字母表，则 A* 就是该字母表上的所有符号串的集合 文法G定义为一个四元组(VN,VT,P,S)记为 G=(VN,VT,P,S)。其中VN是非空有穷集合，称为非终结符集，其元素称为非终结符；VT是有穷集合，称为终结符集，其元素称为终结符；P是非空有穷集合，称为规则集，其元素是字母表VN∪VT上的规则，VN∪VT称为文法的字母表 V，且VN∩VT=∅；S∈VN，称为开始符。设文法 G=(VN,VT,P,S), 对于 β∈V∗=(VN∪VT)∗推导是从规则的左部变为右部，规约是从规则的右部变为左部如果 S⇒∗β，则称 β 是文法 G 的句型如果 β 是 G 的句型，且 β∈(VT)∗，则称 β 是 G 的句子文法G能够产生的所有句子的集合称为 G 的语言，记为 L(G)L(G)={β∣S⇒∗β，β∈VT∗} \\begin{aligned} \u0026\\text{文法G定义为一个四元组}(V_N, V_T, P, S) \\\\ \u0026\\text{记为 } G =(V_N, V_T, P, S)\\text{。其中} \\\\ \u0026\\quad V_N\\text{是非空有穷集合，称为非终结符集，其元素称为非终结符；} \\\\ \u0026\\quad V_T\\text{是有穷集合，称为终结符集，其元素称为终结符；} \\\\ \u0026\\quad P\\text{是非空有穷集合，称为规则集，其元素是字母表}V_N\\cup V_T\\text{上的规则，} \\\\ \u0026\\quad V_N\\cup V_T\\text{称为文法的字母表 }V\\text{，且}V_N \\cap V_T = \\emptyset\\text{；} \\\\ \u0026\\quad S \\in V_N\\text{，称为开始符。} \\\\ \u0026\\text{设文法 } G =(V_N, V_T, P, S)\\text{, 对于 } \\beta \\in V^* = (V_N\\cup V_T)^* \\\\ \u0026\\text{推导是从规则的左部变为右部，规约是从规则的右部变为左部} \\\\ \u0026\\text{如果 } S\\xRightarrow{*}\\beta \\text{，则称 } \\beta \\text{ 是文法 } G \\text{ 的句型} \\\\ \u0026\\text{如果 } \\beta \\text{ 是 } G \\text{ 的句型，且 } \\beta \\in (V_T)^*\\text{，则称 } \\beta \\text{ 是 } G \\text{ 的句子} \\\\ \u0026\\text{文法G能够产生的所有句子的集合称为 } G \\text{ 的语言，记为 } L(G) \\\\ \u0026L(G) = \\{\\beta \\mid S\\xRightarrow{*}\\beta\\text{，}\\beta \\in {V_T}^*\\} \\end{aligned} 文法类型 0型文法：规则左侧至少含有一个非终结符\n1型文法：左侧符号串长度不大于右侧符号串长度（除了空规则），并使0型文法，又称上下文相关文法\n2型文法：左侧都只有一个非终结符，且是1型文法\n3型文法：如果任意 ",
+  "wordCount" : "16887",
   "inLanguage": "zh-cn",
   "image":"https://zundadd.github.io/covers/cover020.jpg","datePublished": "2026-06-12T00:00:00Z",
   "dateModified": "2026-06-12T00:00:00Z",
@@ -216,72 +216,51 @@
 <p>设a,b为两个符号串，则有以下运算:
 </p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;连&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-连̲接：a.b = ab
-\\
-或…" style="color:#cc0000">
-连接：a.b = ab
-\\
-或：a|b = a或者b
-\\
-方幂：a^n = aa … a = aa^{n-1} = a^{n-1}a
-\\
-零幂：a^0 = ε 
-\\
-正闭包：a^+ = a^1|a^2|…|a^n|…
-\\
-星闭包：a^* = a^0|a^1|a^2|…|a^n|…
-</span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>连接：</mtext><mi>a</mi><mi mathvariant="normal">.</mi><mi>b</mi><mo>=</mo><mi>a</mi><mi>b</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>或：</mtext><mi>a</mi><mi mathvariant="normal">∣</mi><mi>b</mi><mo>=</mo><mi>a</mi><mtext>或者</mtext><mi>b</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>方幂：</mtext><msup><mi>a</mi><mi>n</mi></msup><mo>=</mo><mi>a</mi><mi>a</mi><mo>…</mo><mi>a</mi><mo>=</mo><mi>a</mi><msup><mi>a</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mi>a</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup><mi>a</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>零幂：</mtext><msup><mi>a</mi><mn>0</mn></msup><mo>=</mo><mi>ε</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>正闭包：</mtext><msup><mi>a</mi><mo>+</mo></msup><mo>=</mo><msup><mi>a</mi><mn>1</mn></msup><mi mathvariant="normal">∣</mi><msup><mi>a</mi><mn>2</mn></msup><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><msup><mi>a</mi><mi>n</mi></msup><mi mathvariant="normal">∣</mi><mo>…</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>星闭包：</mtext><msup><mi>a</mi><mo>∗</mo></msup><mo>=</mo><msup><mi>a</mi><mn>0</mn></msup><mi mathvariant="normal">∣</mi><msup><mi>a</mi><mn>1</mn></msup><mi mathvariant="normal">∣</mi><msup><mi>a</mi><mn>2</mn></msup><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><msup><mi>a</mi><mi>n</mi></msup><mi mathvariant="normal">∣</mi><mo>…</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;\text{连接：}a.b = ab \\
+&amp;\text{或：}a|b = a\text{或者}b \\
+&amp;\text{方幂：}a^n = aa \ldots a = aa^{n-1} = a^{n-1}a \\
+&amp;\text{零幂：}a^0 = \varepsilon \\
+&amp;\text{正闭包：}a^+ = a^1|a^2|\ldots|a^n|\ldots \\
+&amp;\text{星闭包：}a^* = a^0|a^1|a^2|\ldots|a^n|\ldots
+\end{aligned}
+</annotation></semantics></math></span>
 <p>
 设 A 和 B 为两个符号串集合，则有以下运算：
 </p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;乘&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-乘̲积： AB = { xy | …" style="color:#cc0000">
-乘积： AB = { xy | x∈A 且 y∈B}
-\\
-和： A∪B = A+B = { x | x∈A 或 x∈B}
-\\
-方幂：A^n = AA…A = AA^{n-1} = A^{n-1}A
-\\
-零幂：A^0 = { ε }; 
-\\
-正闭包：A^+ = A^1∪A^2∪…∪A^n∪…
-\\
-星闭包：A^* = A^0∪A^1∪A^2∪…∪A^n∪…
-</span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>乘积：</mtext><mi>A</mi><mi>B</mi><mo>=</mo><mo stretchy="false">{</mo><mi>x</mi><mi>y</mi><mo>∣</mo><mi>x</mi><mo>∈</mo><mi>A</mi><mtext> 且 </mtext><mi>y</mi><mo>∈</mo><mi>B</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>和：</mtext><mi>A</mi><mo>∪</mo><mi>B</mi><mo>=</mo><mi>A</mi><mo>+</mo><mi>B</mi><mo>=</mo><mo stretchy="false">{</mo><mi>x</mi><mo>∣</mo><mi>x</mi><mo>∈</mo><mi>A</mi><mtext> 或 </mtext><mi>x</mi><mo>∈</mo><mi>B</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>方幂：</mtext><msup><mi>A</mi><mi>n</mi></msup><mo>=</mo><mi>A</mi><mi>A</mi><mo>…</mo><mi>A</mi><mo>=</mo><mi>A</mi><msup><mi>A</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup><mo>=</mo><msup><mi>A</mi><mrow><mi>n</mi><mo>−</mo><mn>1</mn></mrow></msup><mi>A</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>零幂：</mtext><msup><mi>A</mi><mn>0</mn></msup><mo>=</mo><mo stretchy="false">{</mo><mi>ε</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>正闭包：</mtext><msup><mi>A</mi><mo>+</mo></msup><mo>=</mo><msup><mi>A</mi><mn>1</mn></msup><mo>∪</mo><msup><mi>A</mi><mn>2</mn></msup><mo>∪</mo><mo>…</mo><mo>∪</mo><msup><mi>A</mi><mi>n</mi></msup><mo>∪</mo><mo>…</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>星闭包：</mtext><msup><mi>A</mi><mo>∗</mo></msup><mo>=</mo><msup><mi>A</mi><mn>0</mn></msup><mo>∪</mo><msup><mi>A</mi><mn>1</mn></msup><mo>∪</mo><msup><mi>A</mi><mn>2</mn></msup><mo>∪</mo><mo>…</mo><mo>∪</mo><msup><mi>A</mi><mi>n</mi></msup><mo>∪</mo><mo>…</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;\text{乘积：} AB = \{ xy \mid x\in A \text{ 且 } y\in B\} \\
+&amp;\text{和：} A\cup B = A+B = \{ x \mid x\in A \text{ 或 } x\in B\} \\
+&amp;\text{方幂：}A^n = AA\ldots A = AA^{n-1} = A^{n-1}A \\
+&amp;\text{零幂：}A^0 = \{ \varepsilon \} \\
+&amp;\text{正闭包：}A^+ = A^1\cup A^2\cup\ldots\cup A^n\cup\ldots \\
+&amp;\text{星闭包：}A^* = A^0\cup A^1\cup A^2\cup\ldots\cup A^n\cup\ldots
+\end{aligned}
+</annotation></semantics></math></span>
 <p>
 若 A 为任一字母表，则 A* 就是该字母表上的所有符号串的集合
 </p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;文&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-文̲法G定义为一个四元组(V_N，…" style="color:#cc0000">
-文法G定义为一个四元组(V_N，V-T，P，S)
-\\
-记为 G ＝(VN，VT，P，S)。其中
-\\
-V_N是非空有穷集合，称为非终结符集，其元素称为非终结符；
-  \\
-V_T是有穷集合，称为终结符集，其元素称为终结符；
-  \\
-P是非空有穷集合，称为规则集，其元素是字母表V_N∪V_T上的规则，
-  \\
-V_N∪V_T称为文法的字母表 V，且V_N ∩ V_T＝ \emptyset；
-  \\
-S ∈ V_N ，称为开始符。
-\\\\
-设文法 G ＝(V_N，V_T，P，S), 对于 β ∈ V^* = (V_N∪V_T)^* 
-\\
-推导是从规则的左部变为右部，规约是从规则的右部变为左部
-\\
-如果 S\xRightarrow{*}β ，则称 β 是文法 G 的句型
-\\
-如果 β 是 G 的句型，且 β ∈ (V_T)^*，则称 β 是 G 的句子
-\\\\
-文法G能够产生的所有句子的集合称为 G 的语言，记为 L(G)
-\\
-L(G) = \{β︱S\xRightarrow{*}β，β ∈ {V_T}^*\}
-</span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>文法G定义为一个四元组</mtext><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>S</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>记为 </mtext><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>S</mi><mo stretchy="false">)</mo><mtext>。其中</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><msub><mi>V</mi><mi>N</mi></msub><mtext>是非空有穷集合，称为非终结符集，其元素称为非终结符；</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><msub><mi>V</mi><mi>T</mi></msub><mtext>是有穷集合，称为终结符集，其元素称为终结符；</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>P</mi><mtext>是非空有穷集合，称为规则集，其元素是字母表</mtext><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub><mtext>上的规则，</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub><mtext>称为文法的字母表 </mtext><mi>V</mi><mtext>，且</mtext><msub><mi>V</mi><mi>N</mi></msub><mo>∩</mo><msub><mi>V</mi><mi>T</mi></msub><mo>=</mo><mi mathvariant="normal">∅</mi><mtext>；</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>S</mi><mo>∈</mo><msub><mi>V</mi><mi>N</mi></msub><mtext>，称为开始符。</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>设文法 </mtext><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>S</mi><mo stretchy="false">)</mo><mtext>, 对于 </mtext><mi>β</mi><mo>∈</mo><msup><mi>V</mi><mo>∗</mo></msup><mo>=</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub><msup><mo stretchy="false">)</mo><mo>∗</mo></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>推导是从规则的左部变为右部，规约是从规则的右部变为左部</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>如果 </mtext><mi>S</mi><mover><mo stretchy="true" minsize="3.0em">⇒</mo><mpadded width="+0.6em" lspace="0.3em"><mo lspace="0em" rspace="0em">∗</mo></mpadded></mover><mi>β</mi><mtext>，则称 </mtext><mi>β</mi><mtext> 是文法 </mtext><mi>G</mi><mtext> 的句型</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>如果 </mtext><mi>β</mi><mtext> 是 </mtext><mi>G</mi><mtext> 的句型，且 </mtext><mi>β</mi><mo>∈</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>T</mi></msub><msup><mo stretchy="false">)</mo><mo>∗</mo></msup><mtext>，则称 </mtext><mi>β</mi><mtext> 是 </mtext><mi>G</mi><mtext> 的句子</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>文法G能够产生的所有句子的集合称为 </mtext><mi>G</mi><mtext> 的语言，记为 </mtext><mi>L</mi><mo stretchy="false">(</mo><mi>G</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>L</mi><mo stretchy="false">(</mo><mi>G</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>β</mi><mo>∣</mo><mi>S</mi><mover><mo stretchy="true" minsize="3.0em">⇒</mo><mpadded width="+0.6em" lspace="0.3em"><mo lspace="0em" rspace="0em">∗</mo></mpadded></mover><mi>β</mi><mtext>，</mtext><mi>β</mi><mo>∈</mo><msup><msub><mi>V</mi><mi>T</mi></msub><mo>∗</mo></msup><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;\text{文法G定义为一个四元组}(V_N, V_T, P, S) \\
+&amp;\text{记为 } G =(V_N, V_T, P, S)\text{。其中} \\
+&amp;\quad V_N\text{是非空有穷集合，称为非终结符集，其元素称为非终结符；} \\
+&amp;\quad V_T\text{是有穷集合，称为终结符集，其元素称为终结符；} \\
+&amp;\quad P\text{是非空有穷集合，称为规则集，其元素是字母表}V_N\cup V_T\text{上的规则，} \\
+&amp;\quad V_N\cup V_T\text{称为文法的字母表 }V\text{，且}V_N \cap V_T = \emptyset\text{；} \\
+&amp;\quad S \in V_N\text{，称为开始符。} \\
+&amp;\text{设文法 } G =(V_N, V_T, P, S)\text{, 对于 } \beta \in V^* = (V_N\cup V_T)^* \\
+&amp;\text{推导是从规则的左部变为右部，规约是从规则的右部变为左部} \\
+&amp;\text{如果 } S\xRightarrow{*}\beta \text{，则称 } \beta \text{ 是文法 } G \text{ 的句型} \\
+&amp;\text{如果 } \beta \text{ 是 } G \text{ 的句型，且 } \beta \in (V_T)^*\text{，则称 } \beta \text{ 是 } G \text{ 的句子} \\
+&amp;\text{文法G能够产生的所有句子的集合称为 } G \text{ 的语言，记为 } L(G) \\
+&amp;L(G) = \{\beta \mid S\xRightarrow{*}\beta\text{，}\beta \in {V_T}^*\}
+\end{aligned}
+</annotation></semantics></math></span>
 <h3 id="文法类型">文法类型<a hidden class="anchor" aria-hidden="true" href="#文法类型">#</a></h3>
 <p>0型文法：规则左侧至少含有一个非终结符</p>
 <p>1型文法：左侧符号串长度不大于右侧符号串长度（除了空规则），并使0型文法，又称上下文相关文法</p>
@@ -308,23 +287,17 @@ L(G) = \{β︱S\xRightarrow{*}β，β ∈ {V_T}^*\}
 上的正规集。正规式和正规文法是描述正规集合（即正规语言）的不同方式。
 </p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;对&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-对̲给定的字母表\Sigma
-\\…" style="color:#cc0000">
-对给定的字母表\Sigma
-\\
-\epsilon和\emptyset都是\Sigma上的正规式，它们所表示的正规集为\{\epsilon\}和\emptyset，即L(\epsilon)＝ \{\epsilon\}， L(\emptyset)＝\emptyset;
-\\
-任何a\in \Sigma ，a是\Sigma上的正规式，它所表示的正规集为L(a)=\{a\} ;
-\\
-假定e1和e2都是\Sigma上的正规式，它们所表示的正规集为L(e1)和L(e2)，则
-\\
-(e1|e2)为正规式，它所表示的正规集为L(e1|e2)=L(e1)\cup L(e2)
-\\
-(e1.e2)为正规式，它所表示的正规集为L(e1.e2)=L(e1)L(e2)
-\\
-(e1)^*为正规式，它所表示的正规集为L((e1)^*)=(L(e1))^*
-</span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>对给定的字母表</mtext><mi mathvariant="normal">Σ</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>ϵ</mi><mtext>和</mtext><mi mathvariant="normal">∅</mi><mtext>都是</mtext><mi mathvariant="normal">Σ</mi><mtext>上的正规式，它们所表示的正规集为</mtext><mo stretchy="false">{</mo><mi>ϵ</mi><mo stretchy="false">}</mo><mtext>和</mtext><mi mathvariant="normal">∅</mi><mtext>，即</mtext><mi>L</mi><mo stretchy="false">(</mo><mi>ϵ</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>ϵ</mi><mo stretchy="false">}</mo><mtext>，</mtext><mi>L</mi><mo stretchy="false">(</mo><mi mathvariant="normal">∅</mi><mo stretchy="false">)</mo><mo>=</mo><mi mathvariant="normal">∅</mi><mtext>;</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>任何</mtext><mi>a</mi><mo>∈</mo><mi mathvariant="normal">Σ</mi><mtext>，</mtext><mi>a</mi><mtext>是</mtext><mi mathvariant="normal">Σ</mi><mtext>上的正规式，它所表示的正规集为</mtext><mi>L</mi><mo stretchy="false">(</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>a</mi><mo stretchy="false">}</mo><mtext>;</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>假定</mtext><msub><mi>e</mi><mn>1</mn></msub><mtext>和</mtext><msub><mi>e</mi><mn>2</mn></msub><mtext>都是</mtext><mi mathvariant="normal">Σ</mi><mtext>上的正规式，它们所表示的正规集为</mtext><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mtext>和</mtext><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mtext>，则</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><msub><mi>e</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mtext>为正规式，它所表示的正规集为</mtext><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><msub><mi>e</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mo>∪</mo><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><msub><mi>e</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mtext>为正规式，它所表示的正规集为</mtext><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mi mathvariant="normal">.</mi><msub><mi>e</mi><mn>2</mn></msub><mo stretchy="false">)</mo><mo>=</mo><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mo stretchy="false">)</mo><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>2</mn></msub><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><msup><mo stretchy="false">)</mo><mo>∗</mo></msup><mtext>为正规式，它所表示的正规集为</mtext><mi>L</mi><mo stretchy="false">(</mo><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><msup><mo stretchy="false">)</mo><mo>∗</mo></msup><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mi>L</mi><mo stretchy="false">(</mo><msub><mi>e</mi><mn>1</mn></msub><mo stretchy="false">)</mo><msup><mo stretchy="false">)</mo><mo>∗</mo></msup></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;\text{对给定的字母表}\Sigma \\
+&amp;\epsilon\text{和}\emptyset\text{都是}\Sigma\text{上的正规式，它们所表示的正规集为}\{\epsilon\}\text{和}\emptyset\text{，即}L(\epsilon)= \{\epsilon\}\text{，} L(\emptyset)=\emptyset\text{;} \\
+&amp;\text{任何}a\in \Sigma \text{，}a\text{是}\Sigma\text{上的正规式，它所表示的正规集为}L(a)=\{a\} \text{;} \\
+&amp;\text{假定}e_1\text{和}e_2\text{都是}\Sigma\text{上的正规式，它们所表示的正规集为}L(e_1)\text{和}L(e_2)\text{，则} \\
+&amp;(e_1|e_2)\text{为正规式，它所表示的正规集为}L(e_1|e_2)=L(e_1)\cup L(e_2) \\
+&amp;(e_1.e_2)\text{为正规式，它所表示的正规集为}L(e_1.e_2)=L(e_1)L(e_2) \\
+&amp;(e_1)^*\text{为正规式，它所表示的正规集为}L((e_1)^*)=(L(e_1))^*
+\end{aligned}
+</annotation></semantics></math></span>
 <h3 id="正规式和正规文法的转换">正规式和正规文法的转换<a hidden class="anchor" aria-hidden="true" href="#正规式和正规文法的转换">#</a></h3>
 <p>如果正规式r和文法G，有L(r)＝L(G)则称正规式r和文法G是等价的。从形如产生式 S→r 开始，按下表规则进行转换， 直到全部形如产生式， 符合正规文法之规则形式为止，可得到P和
   <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>V</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">V_N</annotation></semantics></math></span>
@@ -336,38 +309,25 @@ L(G) = \{β︱S\xRightarrow{*}β，β ∈ {V_T}^*\}
 <p>两种自动机都识别正则语言，对于每个可以用正则表达式描述的语言，均可用某个NFA或DFA来识别；反之亦然。
 </p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;是&quot; used in math mode [unicodeTextInMathMode] at position 7: 
-DFA:M是̲一个五元式  M=(K, \S…" style="color:#cc0000">
-DFA:M是一个五元式  M=(K, \Sigma, f, S, Z),其中：
-\\
-K: 有穷状态集
-\\
-\Sigma :  输入字母表(有穷)
-\\
-f: 状态转换函数，为K \times \Sigma \rightarrow K的单值部分映射，f(k_i，a)=k_j表示：
-\\
-当现行状态为k_i，输入字符为a时，将状态转换到下一状态k_j，k_j称为k_i的一个后继状态
-\\
-S\in K是唯一的一个初态
-\\
-Z\subseteq K: 终态集(可空)，也称可接受状态集或结束状态集
-\\\\
-NFA:M是一个五元式M=(K, \Sigma, f, S, Z),其中：
-\\
-K: 有穷状态集
-\\
-\Sigma: 输入字母表(有穷)
-\\
-f: 状态转换函数，为K\times \Sigma \cup \{ε\}\rightarrow2^K的部分映射，其中2^K表示K的幂集
-\\
-S \subset K是非空的初态（也可以为非空集合）
-\\
-Z \subset K: 终态集
-\\\\
-f可以扩充为f&#x27;: K\times \Sigma ^* \rightarrow K映射，并以f替代f&#x27;使用。设a \in \Sigma, β \in \Sigma ^*，q\in K
-\\
-L(M)＝\{α|α\in \Sigma ^*, f’(S, α)\in Z \}
-</span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>DFA: </mtext><mi>M</mi><mtext>是一个五元式 </mtext><mi>M</mi><mo>=</mo><mo stretchy="false">(</mo><mi>K</mi><mo separator="true">,</mo><mi mathvariant="normal">Σ</mi><mo separator="true">,</mo><mi>f</mi><mo separator="true">,</mo><mi>S</mi><mo separator="true">,</mo><mi>Z</mi><mo stretchy="false">)</mo><mtext>,其中：</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>K</mi><mtext>: 有穷状态集</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi mathvariant="normal">Σ</mi><mtext>: 输入字母表(有穷)</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>f</mi><mtext>: 状态转换函数，为</mtext><mi>K</mi><mo>×</mo><mi mathvariant="normal">Σ</mi><mo>→</mo><mi>K</mi><mtext>的单值部分映射，</mtext><mi>f</mi><mo stretchy="false">(</mo><msub><mi>k</mi><mi>i</mi></msub><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mi>k</mi><mi>j</mi></msub><mtext>表示：</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="2em"/><mtext>当现行状态为</mtext><msub><mi>k</mi><mi>i</mi></msub><mtext>，输入字符为</mtext><mi>a</mi><mtext>时，将状态转换到下一状态</mtext><msub><mi>k</mi><mi>j</mi></msub><mtext>，</mtext><msub><mi>k</mi><mi>j</mi></msub><mtext>称为</mtext><msub><mi>k</mi><mi>i</mi></msub><mtext>的一个后继状态</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>S</mi><mo>∈</mo><mi>K</mi><mtext>是唯一的一个初态</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>Z</mi><mo>⊆</mo><mi>K</mi><mtext>: 终态集(可空)，也称可接受状态集或结束状态集</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>NFA: </mtext><mi>M</mi><mtext>是一个五元式</mtext><mi>M</mi><mo>=</mo><mo stretchy="false">(</mo><mi>K</mi><mo separator="true">,</mo><mi mathvariant="normal">Σ</mi><mo separator="true">,</mo><mi>f</mi><mo separator="true">,</mo><mi>S</mi><mo separator="true">,</mo><mi>Z</mi><mo stretchy="false">)</mo><mtext>,其中：</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>K</mi><mtext>: 有穷状态集</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi mathvariant="normal">Σ</mi><mtext>: 输入字母表(有穷)</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>f</mi><mtext>: 状态转换函数，为</mtext><mi>K</mi><mo>×</mo><mi mathvariant="normal">Σ</mi><mo>∪</mo><mo stretchy="false">{</mo><mi>ε</mi><mo stretchy="false">}</mo><mo>→</mo><msup><mn>2</mn><mi>K</mi></msup><mtext>的部分映射，其中</mtext><msup><mn>2</mn><mi>K</mi></msup><mtext>表示</mtext><mi>K</mi><mtext>的幂集</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>S</mi><mo>⊂</mo><mi>K</mi><mtext>是非空的初态（也可以为非空集合）</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mspace width="1em"/><mi>Z</mi><mo>⊂</mo><mi>K</mi><mtext>: 终态集</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>f</mi><mtext>可以扩充为</mtext><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>:</mo><mi>K</mi><mo>×</mo><msup><mi mathvariant="normal">Σ</mi><mo>∗</mo></msup><mo>→</mo><mi>K</mi><mtext>映射，并以</mtext><mi>f</mi><mtext>替代</mtext><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mtext>使用。设</mtext><mi>a</mi><mo>∈</mo><mi mathvariant="normal">Σ</mi><mo separator="true">,</mo><mi>β</mi><mo>∈</mo><msup><mi mathvariant="normal">Σ</mi><mo>∗</mo></msup><mtext>，</mtext><mi>q</mi><mo>∈</mo><mi>K</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>L</mi><mo stretchy="false">(</mo><mi>M</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>α</mi><mo>∣</mo><mi>α</mi><mo>∈</mo><msup><mi mathvariant="normal">Σ</mi><mo>∗</mo></msup><mo separator="true">,</mo><msup><mi>f</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">(</mo><mi>S</mi><mo separator="true">,</mo><mi>α</mi><mo stretchy="false">)</mo><mo>∈</mo><mi>Z</mi><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;\text{DFA: }M\text{是一个五元式 } M=(K, \Sigma, f, S, Z)\text{,其中：} \\
+&amp;\quad K\text{: 有穷状态集} \\
+&amp;\quad \Sigma \text{: 输入字母表(有穷)} \\
+&amp;\quad f\text{: 状态转换函数，为}K \times \Sigma \rightarrow K\text{的单值部分映射，}f(k_i, a)=k_j\text{表示：} \\
+&amp;\qquad \text{当现行状态为}k_i\text{，输入字符为}a\text{时，将状态转换到下一状态}k_j\text{，}k_j\text{称为}k_i\text{的一个后继状态} \\
+&amp;\quad S\in K\text{是唯一的一个初态} \\
+&amp;\quad Z\subseteq K\text{: 终态集(可空)，也称可接受状态集或结束状态集} \\\\
+&amp;\text{NFA: }M\text{是一个五元式}M=(K, \Sigma, f, S, Z)\text{,其中：} \\
+&amp;\quad K\text{: 有穷状态集} \\
+&amp;\quad \Sigma\text{: 输入字母表(有穷)} \\
+&amp;\quad f\text{: 状态转换函数，为}K\times \Sigma \cup \{\varepsilon\}\rightarrow 2^K\text{的部分映射，其中}2^K\text{表示}K\text{的幂集} \\
+&amp;\quad S \subset K\text{是非空的初态（也可以为非空集合）} \\
+&amp;\quad Z \subset K\text{: 终态集} \\\\
+&amp;f\text{可以扩充为}f&#x27;: K\times \Sigma ^* \rightarrow K\text{映射，并以}f\text{替代}f&#x27;\text{使用。设}a \in \Sigma, \beta \in \Sigma ^*\text{，}q\in K \\
+&amp;L(M)=\{\alpha \mid \alpha\in \Sigma ^*, f&#x27;(S, \alpha)\in Z \}
+\end{aligned}
+</annotation></semantics></math></span>
 <h3 id="nfa转dfa">NFA转DFA<a hidden class="anchor" aria-hidden="true" href="#nfa转dfa">#</a></h3>
 <p>基本思想：构造得到的DFA的每个状态和NFA的状态子集对应，DFA读入a1, a2, …, an后到达的状态对应于从NFA开始状态出发沿着a1, a2, …, an可能到达的状态集合，在算法中“并行地模拟”NFA在遇到一个给定输入串时可能执行的所有动作。</p>
 <p>
@@ -383,33 +343,23 @@ L(M)＝\{α|α\in \Sigma ^*, f’(S, α)\in Z \}
 
 </p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;设&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-设̲ NFA:M＝(K,\Sigm…" style="color:#cc0000">
-设 NFA:M＝(K,\Sigma,f,S,Z)则与之等价的DFA:M&#x27;＝(K&#x27;,\Sigma &#x27;,f&#x27;,S&#x27;,Z&#x27;)，其中:
-\\
-⑴ K&#x27;＝ρ(K)(ρ(K) = 2^K)
-\\
-⑵ \Sigma &#x27;＝ \Sigma
-\\
-⑶ f&#x27;(q,a)＝\varepsilon _\text{closure(M(q,a))}
-\\
-⑷ S&#x27;＝\varepsilon _\text{closure(S)}
-\\
-⑸ Z&#x27;＝\{q︱q\subset K&#x27;, q \cap Z ≠ \emptyset\}
-\\\\
-具体计算步骤可以是：
-\\
-① 置K&#x27;为空集；
-\\
-② 计算M&#x27;的开始状态S&#x27;＝\varepsilon _\text{closure(M(q,a))}， S&#x27;作为K&#x27;新增状态；
-\\
-③ 对于K&#x27;每一新增状态q，计算出每个a \in \Sigma的转换状态p，
-\\
-即f&#x27;(q,a) ＝p＝\varepsilon _\text{closure(M(q,a))}。如果p \notin K&#x27;，则p作为K&#x27;新增状态；
-\\
-④ 重复③，直到K&#x27;不再出现新增状态为止；
-\\
-⑤ 计算接受状态集Z&#x27;＝\{q︱q \in K&#x27;,q \cap Z ≠ \emptyset\}
+  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unrecognized Unicode character &quot;⑴&quot; (9332) [unknownSymbol] at position 116: …其中:} \\
+&amp;\text{⑴̲ } K&#x27;=\rho(K)\ …" style="color:#cc0000">
+\begin{aligned}
+&amp;\text{设 NFA: }M=(K,\Sigma,f,S,Z)\text{则与之等价的DFA: }M&#x27;=(K&#x27;,\Sigma &#x27;,f&#x27;,S&#x27;,Z&#x27;)\text{，其中:} \\
+&amp;\text{⑴ } K&#x27;=\rho(K)\ (\rho(K) = 2^K) \\
+&amp;\text{⑵ } \Sigma &#x27; = \Sigma \\
+&amp;\text{⑶ } f&#x27;(q,a)=\varepsilon_\text{closure}(M(q,a)) \\
+&amp;\text{⑷ } S&#x27;=\varepsilon_\text{closure}(S) \\
+&amp;\text{⑸ } Z&#x27;=\{q \mid q\subset K&#x27;,\ q \cap Z \neq \emptyset\} \\\\
+&amp;\text{具体计算步骤可以是：} \\
+&amp;\text{① 置}K&#x27;\text{为空集；} \\
+&amp;\text{② 计算}M&#x27;\text{的开始状态}S&#x27;=\varepsilon_\text{closure}(M(q,a))\text{，}S&#x27;\text{作为}K&#x27;\text{新增状态；} \\
+&amp;\text{③ 对于}K&#x27;\text{每一新增状态}q\text{，计算出每个}a \in \Sigma\text{的转换状态}p\text{，} \\
+&amp;\quad \text{即}f&#x27;(q,a)=p=\varepsilon_\text{closure}(M(q,a))\text{。如果}p \notin K&#x27;\text{，则}p\text{作为}K&#x27;\text{新增状态；} \\
+&amp;\text{④ 重复③，直到}K&#x27;\text{不再出现新增状态为止；} \\
+&amp;\text{⑤ 计算接受状态集}Z&#x27;=\{q \mid q \in K&#x27;,\ q \cap Z \neq \emptyset\}
+\end{aligned}
 </span>
 <p>
 设字母表只包含两个 <em>a</em> 和<em>b</em>，构造一张表。首先，置第1行第1列为
@@ -431,16 +381,14 @@ L(M)＝\{α|α\in \Sigma ^*, f’(S, α)\in Z \}
 </li>
 <li>
 
-  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>如果 </mtext><mi mathvariant="normal">∃</mi><mi>I</mi><mo>∈</mo><mi mathvariant="script">P</mi><mtext> </mtext><mi mathvariant="normal">∃</mi><mi>a</mi><mo>∈</mo><mi mathvariant="normal">Σ</mi><mtext> </mtext><mi mathvariant="normal">∃</mi><mi>J</mi><mo>∈</mo><mi mathvariant="script">P</mi><mtext> </mtext><mo stretchy="false">[</mo><mi>M</mi><mo stretchy="false">(</mo><mi>I</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>⊈</mo><mi>J</mi><mo stretchy="false">]</mo><mspace></mspace><mtext>即状态子集 </mtext><mi>I</mi><mo>∈</mo><mi mathvariant="script">P</mi><mtext> 中至少存在两个 </mtext><mi>p</mi><mtext> 和 </mtext><mi>q</mi><mtext>，使得 </mtext><mi>f</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>∈</mo><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mtext> 和 </mtext><mi>f</mi><mo stretchy="false">(</mo><mi>q</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>∈</mo><msup><mi>J</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mspace></mspace><mtext>且 </mtext><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo mathvariant="normal">≠</mo><msup><mi>J</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mtext> </mtext><mo stretchy="false">(</mo><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo separator="true">,</mo><msup><mi>J</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mo>∈</mo><mi mathvariant="script">P</mi><mo stretchy="false">)</mo><mspace></mspace><mtext>则将 </mtext><mi>I</mi><mtext> 分割成 </mtext><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mtext> 和 </mtext><msup><mi>I</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mtext>，即 </mtext><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>=</mo><mo stretchy="false">{</mo><mi>r</mi><mo>∣</mo><mi mathvariant="normal">∀</mi><mi>r</mi><mo>∈</mo><mi>I</mi><mtext> </mtext><mo stretchy="false">[</mo><mi>f</mi><mo stretchy="false">(</mo><mi>r</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>∈</mo><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">]</mo><mo stretchy="false">}</mo><mo separator="true">,</mo><mtext> </mtext><msup><mi>I</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mo>=</mo><mi>I</mi><mo>−</mo><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mspace></mspace><mtext>重置划分 </mtext><mi mathvariant="script">P</mi><mo>:</mo><mtext> </mtext><mi mathvariant="script">P</mi><mo>←</mo><mo stretchy="false">(</mo><mi mathvariant="script">P</mi><mo>−</mo><mo stretchy="false">{</mo><mi>I</mi><mo stretchy="false">}</mo><mo stretchy="false">)</mo><mo>∪</mo><mo stretchy="false">{</mo><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo separator="true">,</mo><msup><mi>I</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mo stretchy="false">}</mo><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">
-   \text{如果 }\exists I\in\mathcal{P}\ \exists a\in\Sigma\ \exists J\in\mathcal{P}\ [M(I,a)\nsubseteq J]
-   \\
-   \text{即状态子集 }I\in\mathcal{P}\text{ 中至少存在两个 }p\text{ 和 }q\text{，使得 }f(p,a)\in J&#x27; \text{ 和 } f(q,a)\in J&#x27;&#x27;
-   \\
-   \text{且 }J&#x27;\neq J&#x27;&#x27;\ (J&#x27;,J&#x27;&#x27;\in\mathcal{P})
-   \\
-   \text{则将 }I\text{ 分割成 }I&#x27;\text{ 和 }I&#x27;&#x27;\text{，即 }I&#x27;=\{r\mid \forall r\in I\ [f(r,a)\in J&#x27;]\},\ I&#x27;&#x27;=I-I&#x27;
-   \\
-   \text{重置划分 }\mathcal{P}:\ \mathcal{P}\leftarrow(\mathcal{P}-\{I\})\cup\{I&#x27;,I&#x27;&#x27;\}.
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>如果 </mtext><mi mathvariant="normal">∃</mi><mi>I</mi><mo>∈</mo><mi mathvariant="script">P</mi><mtext> </mtext><mi mathvariant="normal">∃</mi><mi>a</mi><mo>∈</mo><mi mathvariant="normal">Σ</mi><mtext> </mtext><mi mathvariant="normal">∃</mi><mi>J</mi><mo>∈</mo><mi mathvariant="script">P</mi><mtext> </mtext><mo stretchy="false">[</mo><mi>M</mi><mo stretchy="false">(</mo><mi>I</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>⊈</mo><mi>J</mi><mo stretchy="false">]</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>即状态子集 </mtext><mi>I</mi><mo>∈</mo><mi mathvariant="script">P</mi><mtext> 中至少存在两个 </mtext><mi>p</mi><mtext> 和 </mtext><mi>q</mi><mtext>，使得 </mtext><mi>f</mi><mo stretchy="false">(</mo><mi>p</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>∈</mo><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mtext> 和 </mtext><mi>f</mi><mo stretchy="false">(</mo><mi>q</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>∈</mo><msup><mi>J</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>且 </mtext><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo mathvariant="normal">≠</mo><msup><mi>J</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mtext> </mtext><mo stretchy="false">(</mo><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo separator="true">,</mo><msup><mi>J</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mo>∈</mo><mi mathvariant="script">P</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>则将 </mtext><mi>I</mi><mtext> 分割成 </mtext><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mtext> 和 </mtext><msup><mi>I</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mtext>，即 </mtext><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>=</mo><mo stretchy="false">{</mo><mi>r</mi><mo>∣</mo><mi mathvariant="normal">∀</mi><mi>r</mi><mo>∈</mo><mi>I</mi><mtext> </mtext><mo stretchy="false">[</mo><mi>f</mi><mo stretchy="false">(</mo><mi>r</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>∈</mo><msup><mi>J</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">]</mo><mo stretchy="false">}</mo><mo separator="true">,</mo><mtext> </mtext><msup><mi>I</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mo>=</mo><mi>I</mi><mo>−</mo><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>重置划分 </mtext><mi mathvariant="script">P</mi><mo>:</mo><mtext> </mtext><mi mathvariant="script">P</mi><mo>←</mo><mo stretchy="false">(</mo><mi mathvariant="script">P</mi><mo>−</mo><mo stretchy="false">{</mo><mi>I</mi><mo stretchy="false">}</mo><mo stretchy="false">)</mo><mo>∪</mo><mo stretchy="false">{</mo><msup><mi>I</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo separator="true">,</mo><msup><mi>I</mi><mrow><mo mathvariant="normal">′</mo><mo mathvariant="normal">′</mo></mrow></msup><mo stretchy="false">}</mo><mi mathvariant="normal">.</mi></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+   \begin{aligned}
+   &amp;\text{如果 }\exists I\in\mathcal{P}\ \exists a\in\Sigma\ \exists J\in\mathcal{P}\ [M(I,a)\nsubseteq J] \\
+   &amp;\text{即状态子集 }I\in\mathcal{P}\text{ 中至少存在两个 }p\text{ 和 }q\text{，使得 }f(p,a)\in J&#x27; \text{ 和 } f(q,a)\in J&#x27;&#x27; \\
+   &amp;\text{且 }J&#x27;\neq J&#x27;&#x27;\ (J&#x27;,J&#x27;&#x27;\in\mathcal{P}) \\
+   &amp;\text{则将 }I\text{ 分割成 }I&#x27;\text{ 和 }I&#x27;&#x27;\text{，即 }I&#x27;=\{r\mid \forall r\in I\ [f(r,a)\in J&#x27;]\},\ I&#x27;&#x27;=I-I&#x27; \\
+   &amp;\text{重置划分 }\mathcal{P}:\ \mathcal{P}\leftarrow(\mathcal{P}-\{I\})\cup\{I&#x27;,I&#x27;&#x27;\}.
+   \end{aligned}
    </annotation></semantics></math></span>
 </li>
 <li>
@@ -480,32 +428,24 @@ L(M)＝\{α|α\in \Sigma ^*, f’(S, α)\in Z \}
 </li>
 </ul>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;设&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-设̲文法G＝(V_N, V_T, …" style="color:#cc0000">
-设文法G＝(V_N, V_T, P, S)是上下文无关文法， A∈V_N，
-\\\\
-FIRST(α)＝\{a︱α \xRightarrow{*} aβ，a∈V_T，α，β∈V^*\}
-\\
-特别地，若α \xRightarrow{*} ε，约定ε∈FIRST(α)
-\\\\
-FOLLOW(A)＝\{a|S=&gt;αAβ, a∈FIRST(β), α∈V_T^*, β∈V^+\}
-\\
-若 S=&gt;αAβ，且β =&gt; \epsilon，则规定\# ∈FOLLOW(A)
-\\
-\#作为输入串的结束符，也称为输入串括号
-\\\\
-SELECT(A→α)称为规则A→α的选择集。
-\\
-它是FIRST(α)和FOLLOW(A)组成，是终结符号集V_T的子集
-\\
-表示选择该规则推导时的下一个字符选择范围
-\\
-\operatorname{SELECT}(A\to\alpha)=
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>设文法</mtext><mi>G</mi><mo>=</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>S</mi><mo stretchy="false">)</mo><mtext>是上下文无关文法，</mtext><mi>A</mi><mo>∈</mo><msub><mi>V</mi><mi>N</mi></msub><mtext>，</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi mathvariant="normal">FIRST</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>a</mi><mo>∣</mo><mi>α</mi><mover><mo stretchy="true" minsize="3.0em">⇒</mo><mpadded width="+0.6em" lspace="0.3em"><mo lspace="0em" rspace="0em">∗</mo></mpadded></mover><mi>a</mi><mi>β</mi><mtext>，</mtext><mi>a</mi><mo>∈</mo><msub><mi>V</mi><mi>T</mi></msub><mtext>，</mtext><mi>α</mi><mtext>，</mtext><mi>β</mi><mo>∈</mo><msup><mi>V</mi><mo>∗</mo></msup><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>特别地，若</mtext><mi>α</mi><mover><mo stretchy="true" minsize="3.0em">⇒</mo><mpadded width="+0.6em" lspace="0.3em"><mo lspace="0em" rspace="0em">∗</mo></mpadded></mover><mi>ε</mi><mtext>，约定</mtext><mi>ε</mi><mo>∈</mo><mi mathvariant="normal">FIRST</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi mathvariant="normal">FOLLOW</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">{</mo><mi>a</mi><mo>∣</mo><mi>S</mi><msup><mo>⇒</mo><mo>∗</mo></msup><mi>α</mi><mi>A</mi><mi>β</mi><mo separator="true">,</mo><mtext> </mtext><mi>a</mi><mo>∈</mo><mi mathvariant="normal">FIRST</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>β</mi><mo stretchy="false">)</mo><mo separator="true">,</mo><mtext> </mtext><mi>α</mi><mo>∈</mo><msubsup><mi>V</mi><mi>T</mi><mo>∗</mo></msubsup><mo separator="true">,</mo><mtext> </mtext><mi>β</mi><mo>∈</mo><msup><mi>V</mi><mo>+</mo></msup><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>若 </mtext><mi>S</mi><msup><mo>⇒</mo><mo>∗</mo></msup><mi>α</mi><mi>A</mi><mi>β</mi><mtext>，且</mtext><mi>β</mi><msup><mo>⇒</mo><mo>∗</mo></msup><mi>ε</mi><mtext>，则规定</mtext><mi mathvariant="normal">#</mi><mo>∈</mo><mi mathvariant="normal">FOLLOW</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi mathvariant="normal">#</mi><mtext>作为输入串的结束符，也称为输入串括号</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi mathvariant="normal">SELECT</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>A</mi><mo>→</mo><mi>α</mi><mo stretchy="false">)</mo><mtext>称为规则</mtext><mi>A</mi><mo>→</mo><mi>α</mi><mtext>的选择集。</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>它是</mtext><mi mathvariant="normal">FIRST</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo><mtext>和</mtext><mi mathvariant="normal">FOLLOW</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo><mtext>组成，是终结符号集</mtext><msub><mi>V</mi><mi>T</mi></msub><mtext>的子集</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>表示选择该规则推导时的下一个字符选择范围</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi mathvariant="normal">SELECT</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>A</mi><mo>→</mo><mi>α</mi><mo stretchy="false">)</mo><mo>=</mo><mrow><mo fence="true">{</mo><mtable rowspacing="0.36em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi mathvariant="normal">FIRST</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>α</mi><mi mathvariant="normal"≯</mi><msup><mo>⇒</mo><mo>∗</mo></msup><mi>ε</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo stretchy="false">(</mo><mi mathvariant="normal">FIRST</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>α</mi><mo stretchy="false">)</mo><mo>−</mo><mo stretchy="false">{</mo><mi>ε</mi><mo stretchy="false">}</mo><mo stretchy="false">)</mo><mo>∪</mo><mi mathvariant="normal">FOLLOW</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>A</mi><mo stretchy="false">)</mo><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>α</mi><msup><mo>⇒</mo><mo>∗</mo></msup><mi>ε</mi></mrow></mstyle></mtd></mtr></mtable></mrow></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;\text{设文法}G=(V_N, V_T, P, S)\text{是上下文无关文法，} A\in V_N\text{，} \\\\
+&amp;\operatorname{FIRST}(\alpha)=\{a \mid \alpha \xRightarrow{*} a\beta\text{，}a\in V_T\text{，}\alpha\text{，}\beta\in V^*\} \\
+&amp;\text{特别地，若}\alpha \xRightarrow{*} \varepsilon\text{，约定}\varepsilon\in\operatorname{FIRST}(\alpha) \\\\
+&amp;\operatorname{FOLLOW}(A)=\{a \mid S\Rightarrow^*\alpha A\beta,\ a\in\operatorname{FIRST}(\beta),\ \alpha\in V_T^*,\ \beta\in V^+\} \\
+&amp;\text{若 } S\Rightarrow^*\alpha A\beta\text{，且}\beta \Rightarrow^* \varepsilon\text{，则规定}\# \in\operatorname{FOLLOW}(A) \\
+&amp;\#\text{作为输入串的结束符，也称为输入串括号} \\\\
+&amp;\operatorname{SELECT}(A\to\alpha)\text{称为规则}A\to\alpha\text{的选择集。} \\
+&amp;\text{它是}\operatorname{FIRST}(\alpha)\text{和}\operatorname{FOLLOW}(A)\text{组成，是终结符号集}V_T\text{的子集} \\
+&amp;\text{表示选择该规则推导时的下一个字符选择范围} \\
+&amp;\operatorname{SELECT}(A\to\alpha)=
 \begin{cases}
 \operatorname{FIRST}(\alpha), &amp; \alpha \not\Rightarrow^* \varepsilon \\[4pt]
 (\operatorname{FIRST}(\alpha)-\{\varepsilon\})\cup \operatorname{FOLLOW}(A), &amp; \alpha \Rightarrow^* \varepsilon
 \end{cases}
-</span>
+\end{aligned}
+</annotation></semantics></math></span>
 <p>为了判断LL(1)文法，有一个很重要的步骤就是找出能够推导出
   <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ϵ</mi></mrow><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math></span>
 的非终结符，这就需要用一个类似递归的算法来连锁推导。举个例子：</p>
@@ -517,14 +457,13 @@ SELECT(A→α)称为规则A→α的选择集。
 <li>提取左公共因子
 
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;对&quot; used in math mode [unicodeTextInMathMode] at position 4: 
-  对̲形如A→αβ_1|αβ_2| …" style="color:#cc0000">
-  对形如A→αβ_1|αβ_2| … |αβ_n 进行等价变换为：
-  \\
-  A→αA’
-  \\              
-  A’→ β_1| β_2| … | β_n
-  </span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>对形如</mtext><mi>A</mi><mo>→</mo><mi>α</mi><msub><mi>β</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><mi>α</mi><msub><mi>β</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><mi>α</mi><msub><mi>β</mi><mi>n</mi></msub><mtext> 进行等价变换为：</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>A</mi><mo>→</mo><mi>α</mi><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><msub><mi>β</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><msub><mi>β</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><msub><mi>β</mi><mi>n</mi></msub></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+  \begin{aligned}
+  &amp;\text{对形如}A\to\alpha\beta_1|\alpha\beta_2| \ldots |\alpha\beta_n \text{ 进行等价变换为：} \\
+  &amp;A\to\alpha A&#x27; \\
+  &amp;A&#x27;\to \beta_1| \beta_2| \ldots | \beta_n
+  \end{aligned}
+  </annotation></semantics></math></span>
 </li>
 </ul>
 <p>设文法
@@ -545,23 +484,16 @@ SELECT(A→α)称为规则A→α的选择集。
 <p>消除直接左递归
 </p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;改&quot; used in math mode [unicodeTextInMathMode] at position 61: …… | β_n
-  \\
-  改̲写为：
-  \\
-  A→ β…" style="color:#cc0000">
-  A→Aα_1| Aα_2| … | Aα_m
-  \\
-  A→β_1| β_2| … | β_n
-  \\
-  改写为：
-  \\
-  A→ β_1A’|β_2A’| … |β_nA’
-  \\
-  A’→α_1A’| α_2A’| … | α_mA’
-  \\
-  A’→ε
-  </span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>A</mi><mo>→</mo><mi>A</mi><msub><mi>α</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><mi>A</mi><msub><mi>α</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><mi>A</mi><msub><mi>α</mi><mi>m</mi></msub></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>A</mi><mo>→</mo><msub><mi>β</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><msub><mi>β</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><msub><mi>β</mi><mi>n</mi></msub></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>改写为：</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>A</mi><mo>→</mo><msub><mi>β</mi><mn>1</mn></msub><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">∣</mi><msub><mi>β</mi><mn>2</mn></msub><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><msub><mi>β</mi><mi>n</mi></msub><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><msub><mi>α</mi><mn>1</mn></msub><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">∣</mi><msub><mi>α</mi><mn>2</mn></msub><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mi mathvariant="normal">∣</mi><mo>…</mo><mi mathvariant="normal">∣</mi><msub><mi>α</mi><mi>m</mi></msub><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msup><mi>A</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><mi>ε</mi></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+  \begin{aligned}
+  &amp;A\to A\alpha_1| A\alpha_2| \ldots | A\alpha_m \\
+  &amp;A\to \beta_1| \beta_2| \ldots | \beta_n \\
+  &amp;\text{改写为：} \\
+  &amp;A\to \beta_1A&#x27;|\beta_2A&#x27;| \ldots |\beta_nA&#x27; \\
+  &amp;A&#x27;\to\alpha_1A&#x27;| \alpha_2A&#x27;| \ldots | \alpha_mA&#x27; \\
+  &amp;A&#x27;\to\varepsilon
+  \end{aligned}
+  </annotation></semantics></math></span>
 </li>
 <li>
 <p>消除间接左递归：先把间接左递归变为直接左递归，再将直接左递归化为右递归。</p>
@@ -597,50 +529,52 @@ SELECT(A→α)称为规则A→α的选择集。
 <h3 id="lr0">LR(0)<a hidden class="anchor" aria-hidden="true" href="#lr0">#</a></h3>
 <p>将符号串的任意含有头符号的子串称为前缀。特别地，空串ε为任意串的前缀。到句柄结尾为止的那个前缀，叫可归前缀，不超过句柄末尾的前缀，都叫活前缀。</p>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;增&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-增̲广文法：\\
-G[S]＝(V_…" style="color:#cc0000">
-增广文法：\\
-G[S]＝(V_N,V_T,P, S) \\
-G[S&#x27;]＝(V_N∪{S&#x27;},V_T,P∪{S&#x27;→S}, S&#x27;) \\
-VN \cap {S&#x27;}= \emptyset \\
-G[S&#x27;]是G[S]的增广文法
-</span>
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mtext>增广文法：</mtext></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>G</mi><mo stretchy="false">[</mo><mi>S</mi><mo stretchy="false">]</mo><mo>=</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo separator="true">,</mo><mi>S</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>G</mi><mo stretchy="false">[</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">]</mo><mo>=</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><mo stretchy="false">{</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">}</mo><mo separator="true">,</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mi>P</mi><mo>∪</mo><mo stretchy="false">{</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><mi>S</mi><mo stretchy="false">}</mo><mo separator="true">,</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msub><mi>V</mi><mi>N</mi></msub><mo>∩</mo><mo stretchy="false">{</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">}</mo><mo>=</mo><mi mathvariant="normal">∅</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>G</mi><mo stretchy="false">[</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">]</mo><mtext>是</mtext><mi>G</mi><mo stretchy="false">[</mo><mi>S</mi><mo stretchy="false">]</mo><mtext>的增广文法</mtext></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;\text{增广文法：} \\
+&amp;G[S]=(V_N,V_T,P, S) \\
+&amp;G[S&#x27;]=(V_N\cup\{S&#x27;\},V_T,P\cup\{S&#x27;\to S\}, S&#x27;) \\
+&amp;V_N \cap \{S&#x27;\}= \emptyset \\
+&amp;G[S&#x27;]\text{是}G[S]\text{的增广文法}
+\end{aligned}
+</annotation></semantics></math></span>
 <p>
 第一步是构造状态，第二步是构造状态变迁关系。</p>
 <h4 id="构造状态">构造状态<a hidden class="anchor" aria-hidden="true" href="#构造状态">#</a></h4>
 <img src="7.png" style="zoom:50%;" />
 $$
-设I是文法G的LR(0)项目子集，如上图 \\
-<p>MOVE(I，X)定义如下： \
-MOVE(I，X) ＝ { A→αX·β︱A→α·Xβ∈I } \
-例：I_0={S&rsquo;→ · S， S → · aAcBe } \
-MOVE(I_0, a)={ S→a·AcBe } \\</p>
-<p>closure(I)定义如下： \
-1.I \subset closure(I) \
-2.{ B→·γ︱A→α·Bβ∈closure(I) } \subset closure(I) \
-3. 重复2.，直到closure(I)，不再扩大为止。 \
-例：I= {S→a · AcBe } \
-closure(I)={S→a · AcBe,A→·Ab,A→·b } \
-\
-识别活前缀DFA  M＝(K,\Sigma, f , S , Z)，其中： \
-K \subseteq ρ(LR(0)项目集)  \
-\Sigma ＝ V_N \cup V_T \
-f(I,X) ＝ closure(Move(I，X)),I \in K, X \in V_N \
-S ＝ closure(S′→·S) \
-Z  ＝ {q︱q \in K, q 含有归约项目 } \
-$$</p>
+\begin{aligned}
+&\text{设}I\text{是文法}G\text{的LR(0)项目子集，如上图} \\\\
+&\text{MOVE}(I,X)\text{定义如下：} \\
+&\text{MOVE}(I,X) = \{ A\to\alpha X\cdot\beta \mid A\to\alpha\cdot X\beta\in I \} \\
+&\text{例：}I_0=\{S'\to \cdot S,\ S \to \cdot aAcBe \} \\
+&\text{MOVE}(I_0, a)=\{ S\to a\cdot AcBe \} \\\\
+&\text{closure}(I)\text{定义如下：} \\
+&1.\ I \subset \text{closure}(I) \\
+&2.\ \{ B\to\cdot\gamma \mid A\to\alpha\cdot B\beta\in\text{closure}(I) \} \subset \text{closure}(I) \\
+&3.\ \text{重复2.，直到closure}(I)\text{不再扩大为止。} \\
+&\text{例：}I= \{S\to a \cdot AcBe \} \\
+&\text{closure}(I)=\{S\to a \cdot AcBe,\ A\to\cdot Ab,\ A\to\cdot b \} \\\\
+&\text{识别活前缀DFA } M=(K,\Sigma, f , S , Z)\text{，其中：} \\
+&K \subseteq \rho(\text{LR(0)项目集}) \\
+&\Sigma = V_N \cup V_T \\
+&f(I,X) = \text{closure}(\text{Move}(I,X)),\ I \in K,\ X \in V_N \\
+&S = \text{closure}(S'\to\cdot S) \\
+&Z = \{q \mid q \in K,\ q \text{ 含有归约项目} \}
+\end{aligned}
+$$
 <h4 id="填表">填表<a hidden class="anchor" aria-hidden="true" href="#填表">#</a></h4>
 
-  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;对&quot; used in math mode [unicodeTextInMathMode] at position 2: 
-对̲每一个LR(0)项目，依据下列…" style="color:#cc0000">
-对每一个LR(0)项目，依据下列情况分别填分析表： \\
-移进项目A→𝛼·𝑎𝛽 ∈ I_k，f(I_k ，a)＝I_j ，置ACTION[k,a]为S_j； \\
-归约项目A→α· ∈ I_k，A→α标号为i， 置ACTION[k,a]为ri ; a∈(V_T \cup {\#})  \\
-接受项目S&#x27;→ S· ∈ I_k ，则置ACTION[k,\#]为acc； \\
-待约项目A→𝛼·X𝛽∈ I_k如果f(I_k,X)＝I_j ，X∈V_N ，置GOTO[k,X]为j；\\
-凡是没能填入分析表元素ACTION[k,a]和GOTO[k,a]置为e t (t为错误编号)。\\ 
-\\
+  <span class="katex-error" title="ParseError: KaTeX parse error: LaTeX-incompatible input and strict mode is set to &#x27;error&#x27;: Unicode text character &quot;。&quot; used in math mode [unicodeTextInMathMode] at position 562: …(t\text{为错误编号})。̲\\
+\end{aligned…" style="color:#cc0000">
+\begin{aligned}
+&amp;\text{对每一个LR(0)项目，依据下列情况分别填分析表：} \\
+&amp;\text{移进项目 }A\to\alpha\cdot a\beta \in I_k\text{，}f(I_k,a)=I_j\text{，置ACTION}[k,a]\text{为}S_j\text{；} \\
+&amp;\text{归约项目 }A\to\alpha\cdot \in I_k\text{，}A\to\alpha\text{标号为}i\text{， 置ACTION}[k,a]\text{为}r_i \text{; } a\in(V_T \cup \{\#\}) \\
+&amp;\text{接受项目 }S&#x27;\to S\cdot \in I_k \text{，则置ACTION}[k,\#]\text{为acc；} \\
+&amp;\text{待约项目 }A\to\alpha\cdot X\beta\in I_k\text{如果}f(I_k,X)=I_j \text{，}X\in V_N \text{，置GOTO}[k,X]\text{为}j\text{；}\\
+&amp;\text{凡是没能填入分析表元素ACTION}[k,a]\text{和GOTO}[k,a]\text{置为}e\ t\ (t\text{为错误编号})。\\
+\end{aligned}
 </span>
 <h3 id="lr0冲突">LR(0)冲突<a hidden class="anchor" aria-hidden="true" href="#lr0冲突">#</a></h3>
 <p>移进-归约冲突: 项目集中同时出现移进和归约项目：
@@ -687,20 +621,19 @@ $$</p>
   <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">I_k</annotation></semantics></math></span>
  的一般形式为：</p>
 
-  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi>I</mi><mi>k</mi></msub><mo>=</mo><mo stretchy="false">{</mo><msub><mi>A</mi><mn>1</mn></msub><mo>→</mo><msub><mi>α</mi><mn>1</mn></msub><mo>⋅</mo><msub><mi>a</mi><mn>1</mn></msub><msub><mi>β</mi><mn>1</mn></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>A</mi><mn>2</mn></msub><mo>→</mo><msub><mi>α</mi><mn>2</mn></msub><mo>⋅</mo><msub><mi>a</mi><mn>2</mn></msub><msub><mi>β</mi><mn>2</mn></msub><mo separator="true">,</mo><mtext> </mtext><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><mtext> </mtext><msub><mi>A</mi><mi>m</mi></msub><mo>→</mo><msub><mi>α</mi><mi>m</mi></msub><mo>⋅</mo><msub><mi>a</mi><mi>m</mi></msub><msub><mi>β</mi><mi>m</mi></msub><mo separator="true">,</mo><mspace></mspace><msub><mi>B</mi><mn>1</mn></msub><mo>→</mo><msub><mi>γ</mi><mn>1</mn></msub><mo>⋅</mo><mo separator="true">,</mo><mtext> </mtext><msub><mi>B</mi><mn>2</mn></msub><mo>→</mo><msub><mi>γ</mi><mn>2</mn></msub><mo>⋅</mo><mo separator="true">,</mo><mtext> </mtext><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><mtext> </mtext><msub><mi>B</mi><mi>n</mi></msub><mo>→</mo><msub><mi>γ</mi><mi>n</mi></msub><mo>⋅</mo><mo separator="true">,</mo><mtext> </mtext><mo>⋯</mo><mtext> </mtext><mo stretchy="false">}</mo><mspace></mspace><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>B</mi><mi>j</mi></msub><mo>∈</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><msub><mi>a</mi><mi>i</mi></msub><mo>∈</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><msub><mi>α</mi><mi>i</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>β</mi><mi>j</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>γ</mi><mi>j</mi></msub><mo>∈</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub><msup><mo stretchy="false">)</mo><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">
-I_k=\{
-A_1\to \alpha_1\cdot a_1\beta_1,\ 
-A_2\to \alpha_2\cdot a_2\beta_2,\ 
-\cdots,\ 
-A_m\to \alpha_m\cdot a_m\beta_m,
-\\
-B_1\to \gamma_1\cdot,\ 
-B_2\to \gamma_2\cdot,\ 
-\cdots,\ 
-B_n\to \gamma_n\cdot,\ 
-\cdots
-\} \\
-A_i,\ B_j\in V_N,a_i\in V_T,\alpha_i,\ \beta_j,\ \gamma_j\in (V_N\cup V_T)^*
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><msub><mi>I</mi><mi>k</mi></msub><mo>=</mo><mo stretchy="false">{</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msub><mi>A</mi><mn>1</mn></msub><mo>→</mo><msub><mi>α</mi><mn>1</mn></msub><mo>⋅</mo><msub><mi>a</mi><mn>1</mn></msub><msub><mi>β</mi><mn>1</mn></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>A</mi><mn>2</mn></msub><mo>→</mo><msub><mi>α</mi><mn>2</mn></msub><mo>⋅</mo><msub><mi>a</mi><mn>2</mn></msub><msub><mi>β</mi><mn>2</mn></msub><mo separator="true">,</mo><mtext> </mtext><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><mtext> </mtext><msub><mi>A</mi><mi>m</mi></msub><mo>→</mo><msub><mi>α</mi><mi>m</mi></msub><mo>⋅</mo><msub><mi>a</mi><mi>m</mi></msub><msub><mi>β</mi><mi>m</mi></msub><mo separator="true">,</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msub><mi>B</mi><mn>1</mn></msub><mo>→</mo><msub><mi>γ</mi><mn>1</mn></msub><mo>⋅</mo><mo separator="true">,</mo><mtext> </mtext><msub><mi>B</mi><mn>2</mn></msub><mo>→</mo><msub><mi>γ</mi><mn>2</mn></msub><mo>⋅</mo><mo separator="true">,</mo><mtext> </mtext><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><mtext> </mtext><msub><mi>B</mi><mi>n</mi></msub><mo>→</mo><msub><mi>γ</mi><mi>n</mi></msub><mo>⋅</mo><mo separator="true">,</mo><mtext> </mtext><mo>⋯</mo><mtext> </mtext><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>B</mi><mi>j</mi></msub><mo>∈</mo><msub><mi>V</mi><mi>N</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>a</mi><mi>i</mi></msub><mo>∈</mo><msub><mi>V</mi><mi>T</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>α</mi><mi>i</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>β</mi><mi>j</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>γ</mi><mi>j</mi></msub><mo>∈</mo><mo stretchy="false">(</mo><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub><msup><mo stretchy="false">)</mo><mo>∗</mo></msup></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+I_k=\{&amp;A_1\to \alpha_1\cdot a_1\beta_1,\
+A_2\to \alpha_2\cdot a_2\beta_2,\
+\cdots,\
+A_m\to \alpha_m\cdot a_m\beta_m, \\
+&amp;B_1\to \gamma_1\cdot,\
+B_2\to \gamma_2\cdot,\
+\cdots,\
+B_n\to \gamma_n\cdot,\
+\cdots\} \\
+&amp;A_i,\ B_j\in V_N,\ a_i\in V_T,\ \alpha_i,\ \beta_j,\ \gamma_j\in (V_N\cup V_T)^*
+\end{aligned}
 </annotation></semantics></math></span>
 <p>如果移进符号集：
   <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">{</mo><msub><mi>a</mi><mn>1</mn></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>a</mi><mn>2</mn></msub><mo separator="true">,</mo><mtext> </mtext><mo>⋯</mo><mtext> </mtext><mo separator="true">,</mo><mtext> </mtext><msub><mi>a</mi><mi>m</mi></msub><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\{a_1,\ a_2,\ \cdots,\ a_m\}</annotation></semantics></math></span>
@@ -771,18 +704,15 @@ A_i,\ B_j\in V_N,a_i\in V_T,\alpha_i,\ \beta_j,\ \gamma_j\in (V_N\cup V_T)^*
 </p>
 <p>则识别活前缀的 DFA：</p>
 
-  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>M</mi><mo>=</mo><mo stretchy="false">(</mo><mi>K</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="normal">Σ</mi><mo separator="true">,</mo><mtext> </mtext><mi>f</mi><mo separator="true">,</mo><mtext> </mtext><mi>S</mi><mo separator="true">,</mo><mtext> </mtext><mi>Z</mi><mo stretchy="false">)</mo><mspace></mspace><mi>K</mi><mo>⊆</mo><mi>ρ</mi><mo stretchy="false">(</mo><mtext>LR(1)项目集</mtext><mo stretchy="false">)</mo><mspace></mspace><mi mathvariant="normal">Σ</mi><mo>=</mo><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub><mspace></mspace><mi>f</mi><mo stretchy="false">(</mo><mi>I</mi><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mrow><mi mathvariant="normal">closure</mi><mo>⁡</mo></mrow><mn>1</mn></msub><mo stretchy="false">(</mo><msub><mrow><mi mathvariant="normal">Move</mi><mo>⁡</mo></mrow><mn>1</mn></msub><mo stretchy="false">(</mo><mi>I</mi><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="1em"/><mi>I</mi><mo>∈</mo><mi>K</mi><mo separator="true">,</mo><mtext> </mtext><mi>X</mi><mo>∈</mo><mi mathvariant="normal">Σ</mi><mspace></mspace><mi>S</mi><mo>=</mo><msub><mrow><mi mathvariant="normal">closure</mi><mo>⁡</mo></mrow><mn>1</mn></msub><mo stretchy="false">(</mo><mo stretchy="false">[</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><mo>∙</mo><mi>S</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="normal">#</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo><mspace></mspace><mi>Z</mi><mo>=</mo><mo stretchy="false">{</mo><mi>q</mi><mo>∣</mo><mi>q</mi><mo>∈</mo><mi>K</mi><mo separator="true">,</mo><mtext> </mtext><mi>q</mi><mtext> 含有归约项目</mtext><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">
-M=(K,\ \Sigma,\ f,\ S,\ Z)
-\\
-K\subseteq \rho(\text{LR(1)项目集})
-\\
-\Sigma = V_N\cup V_T
-\\
-f(I,X)=\operatorname{closure}_1(\operatorname{Move}_1(I,X)),\quad I\in K,\ X\in \Sigma
-\\
-S=\operatorname{closure}_1([S&#x27;\to \bullet S,\ \#])
-\\
-Z=\{q\mid q\in K,\ q\ \text{含有归约项目}\}
+  <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mtable rowspacing="0.25em" columnalign="right left" columnspacing="0em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>M</mi><mo>=</mo><mo stretchy="false">(</mo><mi>K</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="normal">Σ</mi><mo separator="true">,</mo><mtext> </mtext><mi>f</mi><mo separator="true">,</mo><mtext> </mtext><mi>S</mi><mo separator="true">,</mo><mtext> </mtext><mi>Z</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>K</mi><mo>⊆</mo><mi>ρ</mi><mo stretchy="false">(</mo><mtext>LR(1)项目集</mtext><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi mathvariant="normal">Σ</mi><mo>=</mo><msub><mi>V</mi><mi>N</mi></msub><mo>∪</mo><msub><mi>V</mi><mi>T</mi></msub></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>f</mi><mo stretchy="false">(</mo><mi>I</mi><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">)</mo><mo>=</mo><msub><mrow><mi mathvariant="normal">closure</mi><mo>⁡</mo></mrow><mn>1</mn></msub><mo stretchy="false">(</mo><msub><mrow><mi mathvariant="normal">Move</mi><mo>⁡</mo></mrow><mn>1</mn></msub><mo stretchy="false">(</mo><mi>I</mi><mo separator="true">,</mo><mi>X</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo separator="true">,</mo><mspace width="1em"/><mi>I</mi><mo>∈</mo><mi>K</mi><mo separator="true">,</mo><mtext> </mtext><mi>X</mi><mo>∈</mo><mi mathvariant="normal">Σ</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>S</mi><mo>=</mo><msub><mrow><mi mathvariant="normal">closure</mi><mo>⁡</mo></mrow><mn>1</mn></msub><mo stretchy="false">(</mo><mo stretchy="false">[</mo><msup><mi>S</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo>→</mo><mo>∙</mo><mi>S</mi><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="normal">#</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="true"><mrow><mrow></mrow><mi>Z</mi><mo>=</mo><mo stretchy="false">{</mo><mi>q</mi><mo>∣</mo><mi>q</mi><mo>∈</mo><mi>K</mi><mo separator="true">,</mo><mtext> </mtext><mi>q</mi><mtext> 含有归约项目</mtext><mo stretchy="false">}</mo></mrow></mstyle></mtd></mtr></mtable><annotation encoding="application/x-tex">
+\begin{aligned}
+&amp;M=(K,\ \Sigma,\ f,\ S,\ Z) \\
+&amp;K\subseteq \rho(\text{LR(1)项目集}) \\
+&amp;\Sigma = V_N\cup V_T \\
+&amp;f(I,X)=\operatorname{closure}_1(\operatorname{Move}_1(I,X)),\quad I\in K,\ X\in \Sigma \\
+&amp;S=\operatorname{closure}_1([S&#x27;\to \bullet S,\ \#]) \\
+&amp;Z=\{q\mid q\in K,\ q\ \text{含有归约项目}\}
+\end{aligned}
 </annotation></semantics></math></span>
 <p>如果移进符号集{ a1 ， a 2 ，··· ，αm}和搜索集S1、 S2、··· 、S n 两两相交均为空集,则文法G称为LR(1)文法。如果文法G是LR(1)文法，则G是无二义性的，
   <span class="katex"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mi>L</mi><mi>R</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo><mo>∈</mo><mi>L</mi><mi>R</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">SLR(1) \in LR(1)</annotation></semantics></math></span>
