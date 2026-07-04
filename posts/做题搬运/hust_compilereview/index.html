@@ -105,7 +105,7 @@
     
   ],
   "articleBody": "编译原理 Cpt 2 文法和语言 基本概念 形式语言是字母表上的符号按一定的规则组成的所有符号串集合；其中的每个符号串称为一个句子。\n字母表∑是非空有穷集合，其元素称为符号。\n符号串是由字母表∑中的符号组成的有穷序列称为 (字母表∑上的)符号串。特别地，不含任何符号的有穷序列称为空串，记为ε。\n单词和源程序都是符号串\n规则以某种形式表达的在一定范围内共同遵守的章程和制度；这里，指符号串的组成规则。\n设a,b为两个符号串，则有以下运算: 连接：a.b=ab或：a∣b=a或者b方幂：an=aa…a=aan−1=an−1a零幂：a0=ε正闭包：a+=a1∣a2∣…∣an∣…星闭包：a∗=a0∣a1∣a2∣…∣an∣… \\begin{aligned} \u0026\\text{连接：}a.b = ab \\\\ \u0026\\text{或：}a|b = a\\text{或者}b \\\\ \u0026\\text{方幂：}a^n = aa \\ldots a = aa^{n-1} = a^{n-1}a \\\\ \u0026\\text{零幂：}a^0 = \\varepsilon \\\\ \u0026\\text{正闭包：}a^+ = a^1|a^2|\\ldots|a^n|\\ldots \\\\ \u0026\\text{星闭包：}a^* = a^0|a^1|a^2|\\ldots|a^n|\\ldots \\end{aligned} 设 A 和 B 为两个符号串集合，则有以下运算： 乘积：AB={xy∣x∈A 且 y∈B}和：A∪B=A+B={x∣x∈A 或 x∈B}方幂：An=AA…A=AAn−1=An−1A零幂：A0={ε}正闭包：A+=A1∪A2∪…∪An∪…星闭包：A∗=A0∪A1∪A2∪…∪An∪… \\begin{aligned} \u0026\\text{乘积：} AB = \\{ xy \\mid x\\in A \\text{ 且 } y\\in B\\} \\\\ \u0026\\text{和：} A\\cup B = A+B = \\{ x \\mid x\\in A \\text{ 或 } x\\in B\\} \\\\ \u0026\\text{方幂：}A^n = AA\\ldots A = AA^{n-1} = A^{n-1}A \\\\ \u0026\\text{零幂：}A^0 = \\{ \\varepsilon \\} \\\\ \u0026\\text{正闭包：}A^+ = A^1\\cup A^2\\cup\\ldots\\cup A^n\\cup\\ldots \\\\ \u0026\\text{星闭包：}A^* = A^0\\cup A^1\\cup A^2\\cup\\ldots\\cup A^n\\cup\\ldots \\end{aligned} 若 A 为任一字母表，则 A* 就是该字母表上的所有符号串的集合 文法G定义为一个四元组(VN,VT,P,S)记为 G=(VN,VT,P,S)。其中VN是非空有穷集合，称为非终结符集，其元素称为非终结符；VT是有穷集合，称为终结符集，其元素称为终结符；P是非空有穷集合，称为规则集，其元素是字母表VN∪VT上的规则，VN∪VT称为文法的字母表 V，且VN∩VT=∅；S∈VN，称为开始符。设文法 G=(VN,VT,P,S), 对于 β∈V∗=(VN∪VT)∗推导是从规则的左部变为右部，规约是从规则的右部变为左部如果 S⇒∗β，则称 β 是文法 G 的句型如果 β 是 G 的句型，且 β∈(VT)∗，则称 β 是 G 的句子文法G能够产生的所有句子的集合称为 G 的语言，记为 L(G)L(G)={β∣S⇒∗β，β∈VT∗} \\begin{aligned} \u0026\\text{文法G定义为一个四元组}(V_N, V_T, P, S) \\\\ \u0026\\text{记为 } G =(V_N, V_T, P, S)\\text{。其中} \\\\ \u0026\\quad V_N\\text{是非空有穷集合，称为非终结符集，其元素称为非终结符；} \\\\ \u0026\\quad V_T\\text{是有穷集合，称为终结符集，其元素称为终结符；} \\\\ \u0026\\quad P\\text{是非空有穷集合，称为规则集，其元素是字母表}V_N\\cup V_T\\text{上的规则，} \\\\ \u0026\\quad V_N\\cup V_T\\text{称为文法的字母表 }V\\text{，且}V_N \\cap V_T = \\emptyset\\text{；} \\\\ \u0026\\quad S \\in V_N\\text{，称为开始符。} \\\\ \u0026\\text{设文法 } G =(V_N, V_T, P, S)\\text{, 对于 } \\beta \\in V^* = (V_N\\cup V_T)^* \\\\ \u0026\\text{推导是从规则的左部变为右部，规约是从规则的右部变为左部} \\\\ \u0026\\text{如果 } S\\xRightarrow{*}\\beta \\text{，则称 } \\beta \\text{ 是文法 } G \\text{ 的句型} \\\\ \u0026\\text{如果 } \\beta \\text{ 是 } G \\text{ 的句型，且 } \\beta \\in (V_T)^*\\text{，则称 } \\beta \\text{ 是 } G \\text{ 的句子} \\\\ \u0026\\text{文法G能够产生的所有句子的集合称为 } G \\text{ 的语言，记为 } L(G) \\\\ \u0026L(G) = \\{\\beta \\mid S\\xRightarrow{*}\\beta\\text{，}\\beta \\in {V_T}^*\\} \\end{aligned} 文法类型 0型文法：规则左侧至少含有一个非终结符\n1型文法：左侧符号串长度不大于右侧符号串长度（除了空规则），并使0型文法，又称上下文相关文法\n2型文法：左侧都只有一个非终结符，且是1型文法\n3型文法：如果任意 ",
-  "wordCount" : "16887",
+  "wordCount" : "16899",
   "inLanguage": "zh-cn",
   "image":"https://zundadd.github.io/covers/cover020.jpg","datePublished": "2026-06-12T00:00:00Z",
   "dateModified": "2026-06-12T00:00:00Z",
@@ -518,7 +518,8 @@
 <p>优点：简单、直观、易于构造。</p>
 <p>缺点：对文法要求高，必须满足LL(1)文法，由于递归调用多，速度慢，占用空间多</p>
 <h3 id="预测分析法ll1分析">预测分析法LL(1)分析<a hidden class="anchor" aria-hidden="true" href="#预测分析法ll1分析">#</a></h3>
-<p>将输入串视同以串末端为底的栈I，输入串未匹配部分为栈的内容，这个栈称为“输入栈”；推导过程产生的句型未匹配部分，依自右向左顺序，也存放在另一个称为栈S中，这个栈称为“分析栈”；再将规则选择集，存放在一个非终结符为行、终结符为列和元素为规则的二维表M中，这个表称为“分析表”。</p>
+<p>将输入串视同以串末端为底的栈I，输入串未匹配部分为栈的内容，这个栈称为“输入栈”；推导过程产生的句型未匹配部分，依自右向左顺序，也存放在另一个称为栈S中，这个栈称为“分析栈”；再将规则选择集，存放在一个非终结符为行、终结符为列和元素为规则的二维表M中，这个表称为“分析表”。下面是生成的分析表示例：</p>
+<img src="17.png" style="zoom:67%;" />
 <h2 id="cpt-5-语法分析自底向上">Cpt 5 语法分析——自底向上<a hidden class="anchor" aria-hidden="true" href="#cpt-5-语法分析自底向上">#</a></h2>
 <p>跳过了</p>
 <h2 id="cpt-6-lr分析">Cpt 6 LR分析<a hidden class="anchor" aria-hidden="true" href="#cpt-6-lr分析">#</a></h2>
