@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>C&#43;&#43;对象模型笔记 1 | 长谷川蜜柑之窝</title>
+<meta name="keywords" content="C&#43;&#43;, Object Model">
+<meta name="description" content="自用">
+<meta name="author" content="Hasekawa Mikan">
+<link rel="canonical" href="https://zundadd.github.io/posts/c&#43;&#43;%E6%90%AC%E8%BF%90/objectmodel-1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.f6bf338bdb9de6acf40b7704c5d84f185e0b81d7bf95b2043c02907b832618c3.css" integrity="sha256-9r8zi9ud5qz0C3cExdhPGF4Lgde/lbIEPAKQe4MmGMM=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://zundadd.github.io/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://zundadd.github.io/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zundadd.github.io/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://zundadd.github.io/apple-touch-icon.png">
+<link rel="mask-icon" href="https://zundadd.github.io/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh-cn" href="https://zundadd.github.io/posts/c&#43;&#43;%E6%90%AC%E8%BF%90/objectmodel-1/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
+      integrity="sha384-hNLMp0pT8wrFMnkhJfMYB6lHbLpyjhUgG2jnOBMJJr0HMsRMgfl3DPKV+GtIiO4"
+      crossorigin="anonymous">
+<meta property="og:url" content="https://zundadd.github.io/posts/c&#43;&#43;%E6%90%AC%E8%BF%90/objectmodel-1/">
+  <meta property="og:site_name" content="长谷川蜜柑之窝">
+  <meta property="og:title" content="C&#43;&#43;对象模型笔记 1">
+  <meta property="og:description" content="自用">
+  <meta property="og:locale" content="zh-cn">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-07-07T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-07-07T00:00:00+00:00">
+    <meta property="og:image" content="https://zundadd.github.io/covers/cover021.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zundadd.github.io/covers/cover021.jpg">
+<meta name="twitter:title" content="C&#43;&#43;对象模型笔记 1">
+<meta name="twitter:description" content="自用">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "文章列表",
+      "item": "https://zundadd.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "C++对象模型笔记 1",
+      "item": "https://zundadd.github.io/posts/c++%E6%90%AC%E8%BF%90/objectmodel-1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "C++对象模型笔记 1",
+  "name": "C\u002b\u002b对象模型笔记 1",
+  "description": "自用",
+  "keywords": [
+    "C++", "Object Model"
+  ],
+  "articleBody": "Chapter 1 class object的内存占用 包含以下内容：\nnonstatic data members的大小 由于对齐所需要的填充 为了支持virtual而产生的额外负担 指针 指针占用的大小总是占据一个字，在32位系统上就是32位，64位系统上就是64位。引用的实现其实就是一个指针，所以占用和指针一致。\nChapter 2 默认构造函数 当需要调用其他内含class object对象的默认构造函数的时候，就需要为该类生成默认构造函数，而其他不存在默认构造函数的对象就得由用户来手动初始化，比如说指针。\n如果用户制定了默认构造函数，但是其中有些class object未被调用构造函数，编译器则会自动扩充代码来调用默认构造函数。\n存在多个class object时，默认构造函数的调用顺序是按照声明顺序，如果已有的话，则会按照该顺序扩充，哪怕在成员构造列表中已经调用了。对于继承的情况而言，也是同样的。\n如果存在虚函数，那么也必须生成一个默认构造函数，同时还有虚函数表和虚函数指针，如果有实现也要扩张。\n如果存在虚基类，那么由于无法在编译时确定成员或者函数的位置，所以会构建一个基类指针来指向对应的虚基类的地址，加入一层间接性来使得对虚基类的访问能够被确定。\n总的来说，不是说任何class都会生成默认构造函数，也不会指定每一个成员的初始值。生成默认构造函数的目的是确保需要初始化的对象被初始化，以及无法在编译时确定的多态对象能够提供一个稳定的访问方式（比如虚函数、虚基类）\n复制构造函数 以下三种情况会调用复制构造函数：\n显示初始化 当做参数交给某个函数 传回一个class object 当没有提供复制构造函数的时候，编译器会实现，对于内建类型采用值拷贝的方式，对于类成员对象则是递归地调用复制构造函数。\n能否产生复制构造函数取决于class是否展现出位逐次拷贝语义，如果有的话，就不需要生成，直接按位复制（memcpy）即可，反之则需要生成。有四种情况需要：\n存在一个类成员有复制构造函数（无论以什么方式存在） 继承自一个存在复制构造函数的基类 存在虚函数 存在虚基类 前两种情况是因为要调用对应的复制构造函数，所以才需要生成。\n对于第三种情况，因为存在将继承类对象直接赋值给基类对象的存在，这个时候必须重新设置虚函数表，而不是进行逐位复制，所以必须生成。\n对于第四种情况，因为需要确定虚基类指针/偏移，对于继承类赋值基类的情况，也是需要明确定位的，所以必须生成。\n程序转化语义 在声明class object的时候，申请内存和初始化是分开的，也就是说，是先申请内存，然后再在这个“内存”上调用构造函数，进行初始化。\n在将class object作为参数传值的时候，可能会导入临时object，并调用复制构造函数，改写函数传值为传递引用。或者直接将临时变量放到应该在的位置上。\n在将class object作为返回值返回的时候，可能将其转化为无返回值函数，然后额外增加一个函数参数，是返回类型的引用。当调用X xx = bar();时，改写为X xx; bar(xx);，然后函数里面则对额外参数做一次复制构造。\n编译器可能会采用NRV优化，用传入的额外引用参数代替具名变量，即如果所有return语句返回同一个具名变量，那么将会将对具名变量的修改直接替换为传入的额外对象的修改。\n成员初始化列表 ",
+  "wordCount" : "1323",
+  "inLanguage": "zh-cn",
+  "image":"https://zundadd.github.io/covers/cover021.jpg","datePublished": "2026-07-07T00:00:00Z",
+  "dateModified": "2026-07-07T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Hasekawa Mikan"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://zundadd.github.io/posts/c++%E6%90%AC%E8%BF%90/objectmodel-1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "长谷川蜜柑之窝",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://zundadd.github.io/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://zundadd.github.io/" accesskey="h" title="长谷川蜜柑之窝 (Alt + H)">长谷川蜜柑之窝</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://zundadd.github.io/archives/" title="时间轴">
+                    <span>时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://zundadd.github.io/diary/" title="日记">
+                    <span>日记</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://zundadd.github.io/works/" title="作品">
+                    <span>作品</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://zundadd.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://zundadd.github.io/posts/">文章列表</a></div>
+    <h1 class="post-title entry-hint-parent">
+      C&#43;&#43;对象模型笔记 1
+    </h1>
+    <div class="post-meta"><span title='2026-07-07 00:00:00 +0000 UTC'>July 7, 2026</span>&nbsp;·&nbsp;Hasekawa Mikan
+
+</div>
+  </header> 
+<figure class="entry-cover">
+        <img loading="eager" src="https://zundadd.github.io/covers/cover021.jpg" alt="">
+        
+</figure>
+  <div class="post-content"><h2 id="chapter-1">Chapter 1<a hidden class="anchor" aria-hidden="true" href="#chapter-1">#</a></h2>
+<h3 id="class-object的内存占用">class object的内存占用<a hidden class="anchor" aria-hidden="true" href="#class-object的内存占用">#</a></h3>
+<p>包含以下内容：</p>
+<ul>
+<li>nonstatic data members的大小</li>
+<li>由于对齐所需要的填充</li>
+<li>为了支持virtual而产生的额外负担</li>
+</ul>
+<h3 id="指针">指针<a hidden class="anchor" aria-hidden="true" href="#指针">#</a></h3>
+<p>指针占用的大小总是占据一个字，在32位系统上就是32位，64位系统上就是64位。引用的实现其实就是一个指针，所以占用和指针一致。</p>
+<h2 id="chapter-2">Chapter 2<a hidden class="anchor" aria-hidden="true" href="#chapter-2">#</a></h2>
+<h3 id="默认构造函数">默认构造函数<a hidden class="anchor" aria-hidden="true" href="#默认构造函数">#</a></h3>
+<p>当需要调用其他内含class object对象的默认构造函数的时候，就需要为该类生成默认构造函数，而其他不存在默认构造函数的对象就得由用户来手动初始化，比如说指针。</p>
+<p>如果用户制定了默认构造函数，但是其中有些class object未被调用构造函数，编译器则会自动扩充代码来调用默认构造函数。</p>
+<p>存在多个class object时，默认构造函数的调用顺序是按照声明顺序，如果已有的话，则会按照该顺序扩充，哪怕在成员构造列表中已经调用了。对于继承的情况而言，也是同样的。</p>
+<p>如果存在虚函数，那么也必须生成一个默认构造函数，同时还有虚函数表和虚函数指针，如果有实现也要扩张。</p>
+<p>如果存在虚基类，那么由于<strong>无法在编译时确定</strong>成员或者函数的位置，所以会构建一个基类指针来指向对应的虚基类的地址，加入一层间接性来使得对虚基类的访问能够被确定。</p>
+<p>总的来说，不是说任何class都会生成默认构造函数，也不会指定每一个成员的初始值。生成默认构造函数的目的是确保需要初始化的对象被初始化，以及无法在编译时确定的多态对象能够提供一个稳定的访问方式（比如虚函数、虚基类）</p>
+<h3 id="复制构造函数">复制构造函数<a hidden class="anchor" aria-hidden="true" href="#复制构造函数">#</a></h3>
+<p>以下三种情况会调用复制构造函数：</p>
+<ul>
+<li>显示初始化</li>
+<li>当做参数交给某个函数</li>
+<li>传回一个class object</li>
+</ul>
+<p>当没有提供复制构造函数的时候，编译器会实现，对于内建类型采用值拷贝的方式，对于类成员对象则是递归地调用复制构造函数。</p>
+<p>能否产生复制构造函数取决于class是否展现出位逐次拷贝语义，如果有的话，就不需要生成，直接按位复制（memcpy）即可，反之则需要生成。有四种情况需要：</p>
+<ul>
+<li>存在一个类成员有复制构造函数（无论以什么方式存在）</li>
+<li>继承自一个存在复制构造函数的基类</li>
+<li>存在虚函数</li>
+<li>存在虚基类</li>
+</ul>
+<p>前两种情况是因为要调用对应的复制构造函数，所以才需要生成。</p>
+<p>对于第三种情况，因为存在将继承类<strong>对象</strong>直接赋值给基类<strong>对象</strong>的存在，这个时候必须重新设置虚函数表，而不是进行逐位复制，所以必须生成。</p>
+<p>对于第四种情况，因为需要确定虚基类指针/偏移，对于继承类赋值基类的情况，也是需要明确定位的，所以必须生成。</p>
+<h3 id="程序转化语义">程序转化语义<a hidden class="anchor" aria-hidden="true" href="#程序转化语义">#</a></h3>
+<p>在声明class object的时候，申请内存和初始化是分开的，也就是说，是先申请内存，然后再在这个“内存”上调用构造函数，进行初始化。</p>
+<p>在将class object作为参数传值的时候，可能会导入临时object，并调用复制构造函数，改写函数传值为传递引用。或者直接将临时变量放到应该在的位置上。</p>
+<p>在将class object作为返回值返回的时候，可能将其转化为无返回值函数，然后额外增加一个函数参数，是返回类型的引用。当调用<code>X xx = bar();</code>时，改写为<code>X xx; bar(xx);</code>，然后函数里面则对额外参数做一次复制构造。</p>
+<p>编译器可能会采用NRV优化，用传入的额外引用参数代替具名变量，即如果所有return语句返回同一个具名变量，那么将会将对具名变量的修改直接替换为传入的额外对象的修改。</p>
+<h3 id="成员初始化列表">成员初始化列表<a hidden class="anchor" aria-hidden="true" href="#成员初始化列表">#</a></h3>
+
+
+  </div>
+
+  <footer class="post-footer">
+<nav class="paginav">
+  <a class="next" href="https://zundadd.github.io/posts/%E5%81%9A%E9%A2%98%E6%90%AC%E8%BF%90/hust_compilereview/">
+    <span class="title"> »</span>
+    <br>
+    <span>HUST编译原理复习</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>Hasekawa Mikan</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
